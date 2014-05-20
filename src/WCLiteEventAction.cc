@@ -80,7 +80,7 @@ WCLiteEventAction::WCLiteEventAction()
   phot_pyEnd = new G4double[knphotmax];
   */
   
-  const int knpartmax = 7000;
+  const int knpartmax = 4000;
   part_xStart = new G4double[knpartmax];
   part_yStart = new G4double[knpartmax];
   part_zStart = new G4double[knpartmax];
@@ -423,8 +423,8 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
        
      }else{
 
-       if(npart>7000) {
-	 G4cout<<"max number of particles in part array (7000) has been exeeded"<<G4endl;
+       if(npart>4000) {
+	 G4cout<<"max number of particles in part array (4000) has been exeeded"<<G4endl;
        }else{
 	 part_xStart[npart]=xStart;
 	 part_yStart[npart]=yStart;
