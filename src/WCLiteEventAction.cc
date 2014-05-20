@@ -548,12 +548,10 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 	   //	   (*textout)<<eventcount<<" 0 0 0 0 "<<iStep<<" "<<partname<<" "<<partcode<<" "<<trackid<<" "<<parentid<<" "<<xStep<<" "<<yStep<<" "<<zStep<<" "<<xStepP<<" "<<yStepP<<" "<<zStepP<<" "<<tStep<<" "<<tStepP<<" "<<KEStep<<" "<<KEStepP<<" "<<TEdep<<" "<<StepL<<" "<<TrackL<<" "<<theProcess<<" "<<processStep<<" "<<ProcessStepSub<<" "<<TrackStatus<<" 0 "<<std::endl;
 
 	 }
-
-
-
 	 //	 if(iStep==0) trk->Fill();
        }
      }
+     if (npart == 4000 || nphot == 1000000) break; 
      // Done with Full track info on all non-photon particles
    }
 
