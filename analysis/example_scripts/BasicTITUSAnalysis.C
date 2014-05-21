@@ -43,7 +43,7 @@
   // *********************************************************
   // specify the output filename and the2nd parameter is the  mode
   // mode=1 is the only relevant mode for most people
-  WCLTreeWriter *mTW = new WCLTreeWriter("testout_Titus_200.root",1);
+  WCLTreeWriter *mTW = new WCLTreeWriter("testout.root",1);
 
   cout<<"getting nentries"<<endl;
 
