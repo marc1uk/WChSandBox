@@ -175,7 +175,7 @@ void WCLTreeWriter::InputEventContents(WCLTreeReader* fEvent, int whole_event, i
     Int_t* patid  = fEvent->get_part_trackid();
     Int_t* pappid  = fEvent->get_part_pid();
 
-    for(int i=0; i<7000; i++){
+    for(int i=0; i<10000; i++){
       if(i<npart){
 	part_xStart[i] = paxs[i];
 	part_yStart[i] = pays[i];
@@ -294,7 +294,7 @@ void WCLTreeWriter::InputEventContents(WCLTreeReader* fEvent, int whole_event, i
     Double_t* gpke = fEvent->get_genKE();
     
 
-    for(int i=0; i<30; i++){
+    for(int i=0; i<100; i++){
       if(i<ntrks){
 	//	std::cout<<"gen level "<<nneutrons<<" "<<gid[i]<<std::endl;
 	mpid[i] = gid[i];
@@ -398,7 +398,7 @@ void WCLTreeWriter::SetOutBranchAddys()
   fChain->Branch("phot_PMTid",phot_PMTid,"phot_PMTid[nphot]/I");
   fChain->Branch("phot_capnum",phot_capnum,"phot_capnum[nphot]/I");
 
-  const int knpartmax = 7000;
+  const int knpartmax = 10000;
   part_xStart = new double[knpartmax];
   part_yStart = new double[knpartmax];
   part_zStart = new double[knpartmax];
@@ -468,7 +468,7 @@ void WCLTreeWriter::SetOutBranchAddys()
   fChain->Branch("capt_nphot",capt_nphot,"capt_nphot[ncapturecount]/I");
   fChain->Branch("capt_ngamma",capt_ngamma,"capt_ngamma[ncapturecount]/I");
 
-  const int kmaxtrk=30;
+  const int kmaxtrk=100;
   const int kmaxMRDhits=50;
   mpid = new int[kmaxtrk];
   mpx = new double[kmaxtrk];

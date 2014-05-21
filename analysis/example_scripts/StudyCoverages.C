@@ -17,8 +17,8 @@
 
   // Path to WCSim ROOT file
   // =======================
-  TString filename("../../FullEvent_TITUS500.root");
-  TString genfilename("../../generatorcardfile_TITUS500.root");
+  TString filename("../../FullEvent.root");
+  TString genfilename("../../generatorcardfile.root");
 
   // Load Data
   // =========
@@ -51,7 +51,7 @@
   // in a square grid. 13 is largest you can get before they no longer all fit
   // right now this only works for even arrays. I just need to fix the 
   // formular for odd arrays.
-  SandBoxPMTcoverage* sbPMT = new SandBoxPMTcoverage(10);
+  SandBoxPMTcoverage* sbPMT = new SandBoxPMTcoverage();
   // set the dimensions of the detector -x,+x,-y,+y,-z,+z
   sbPMT->SetBoxDimensions(-1500.,1500.,-1500.,1500.,-1500.,1500.);
   //configure each wall
@@ -61,7 +61,7 @@
   sbPMT->SetWallConfiguration(1,2,0,0,0);
 
   //                top-wall, PMTs, circular, 203mm, 6x6 grid 
-  sbPMT->SetWallConfiguration(2,1,0,203.2,6)
+  sbPMT->SetWallConfiguration(2,1,0,203.2,6);
   //                bottom-wall, PMTs, circular, 203mm, 6x6 grid 
   sbPMT->SetWallConfiguration(3,1,0,203.2,6);
 

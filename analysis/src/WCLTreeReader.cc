@@ -228,7 +228,7 @@ void WCLTreeReader::SetEventBranchAddys(int iS)
     phot_pyEnd = new double[knphotmax];
   */
   
-  const int knpartmax = 7000;
+  const int knpartmax = 10000;
   part_xStart = new double[knpartmax];
   part_yStart = new double[knpartmax];
   part_zStart = new double[knpartmax];
@@ -345,7 +345,7 @@ void WCLTreeReader::SetGenBranchAddys(){
 
   std::cout<<"setting generator branch addresses"<<std::endl;
 
-  const int kmaxtrk=30;
+  const int kmaxtrk=100;
   const int kmaxMRDhits=50;
   mpid = new int[kmaxtrk];
   mpx = new double[kmaxtrk];

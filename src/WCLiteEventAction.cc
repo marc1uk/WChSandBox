@@ -49,7 +49,7 @@ WCLiteEventAction::WCLiteEventAction()
 {
   eventcount=1;
 
-  textout = new std::fstream("TextOut.txt",std::ios::out);
+  //  textout = new std::fstream("TextOut.txt",std::ios::out);
 
   no = new TFile("FullEvent.root","RECREATE");
   evttree = new TTree("EventTree","EventTree");
@@ -80,7 +80,7 @@ WCLiteEventAction::WCLiteEventAction()
   phot_pyEnd = new G4double[knphotmax];
   */
   
-  const int knpartmax = 4000;
+  const int knpartmax = 10000;
   part_xStart = new G4double[knpartmax];
   part_yStart = new G4double[knpartmax];
   part_zStart = new G4double[knpartmax];
@@ -103,7 +103,7 @@ WCLiteEventAction::WCLiteEventAction()
   part_trackid = new G4int[knpartmax];
   part_pid = new G4int[knpartmax];
 
-  const int kcapmax = 30;
+  const int kcapmax = 100;
   capt_num = new G4int[kcapmax];
   capt_nucleus = new G4int[kcapmax];
   capt_pid = new G4int[kcapmax];
@@ -176,11 +176,11 @@ WCLiteEventAction::WCLiteEventAction()
  
 WCLiteEventAction::~WCLiteEventAction()
 {
-   no->cd();
-   evttree->Write();
+  //   no->cd();
+  //   evttree->Write();
    no->Close();
 
-   textout->close();
+   //   textout->close();
 
    delete phot_xStart;
    delete phot_yStart;
@@ -390,70 +390,65 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 
        double QE50prescale = nR->Rndm();
        if(QE50prescale<0.5){
-	 
-	 isScatPhot=0;
-	 if( ((xStartDir-xEndDir)!=0) || ((yStartDir-yEndDir)!=0) || ((yStartDir-yEndDir)!=0) ){
-	   //G4cout<<"scattered? "<<(xStartDir-xEndDir)<<" "<<(yStartDir-yEndDir)<<" "<<(yStartDir-yEndDir)<<G4endl;
-	   isScatPhot=1;  
-	 }
-	 
-	 if(nphot>1000000) {
-	   G4cout<<"max number of photons in phot array (1000000) has been exeeded"<<G4endl;
-	 }else{
-	   
-	   phot_xStart[nphot]=xStart;
-	   phot_yStart[nphot]=yStart;
-	   phot_zStart[nphot]=zStart;
-	   phot_tStart[nphot]=tStart;
-	   phot_xEnd[nphot]=xEnd;
-	   phot_yEnd[nphot]=yEnd;
-	   phot_zEnd[nphot]=zEnd;
-	   phot_tEnd[nphot]=tEnd;
-	   phot_wavelength[nphot]=wavelengthStart;
-	   phot_processStart[nphot]= (G4int)processStart;
-	   phot_isScat[nphot]=  (G4int)isScatPhot;
-	   phot_parentid[nphot]= (G4int)parentid;
-	   phot_trackid[nphot]= (G4int)trackid;
-	   phot_hit[nphot]= (G4int)phhit;
-	   
-	   nphot++;
-	 }
-	 //       if(nphot%100==0) G4cout<<nphot<<" PPPP "<<G4endl;
+
+
+       isScatPhot=0;
+       if( ((xStartDir-xEndDir)!=0) || ((yStartDir-yEndDir)!=0) || ((yStartDir-yEndDir)!=0) ){
+	 //G4cout<<"scattered? "<<(xStartDir-xEndDir)<<" "<<(yStartDir-yEndDir)<<" "<<(yStartDir-yEndDir)<<G4endl;
+	 isScatPhot=1;  
        }
-       
+
+       if(nphot>1000000) G4cout<<"max number of photons in phot array (1000000) has been exeeded"<<G4endl;
+
+       phot_xStart[nphot]=xStart;
+       phot_yStart[nphot]=yStart;
+       phot_zStart[nphot]=zStart;
+       phot_tStart[nphot]=tStart;
+       phot_xEnd[nphot]=xEnd;
+       phot_yEnd[nphot]=yEnd;
+       phot_zEnd[nphot]=zEnd;
+       phot_tEnd[nphot]=tEnd;
+       phot_wavelength[nphot]=wavelengthStart;
+       phot_processStart[nphot]= (G4int)processStart;
+       phot_isScat[nphot]=  (G4int)isScatPhot;
+       phot_parentid[nphot]= (G4int)parentid;
+       phot_trackid[nphot]= (G4int)trackid;
+       phot_hit[nphot]= (G4int)phhit;
+
+       nphot++;
+       //       if(nphot%100==0) G4cout<<nphot<<" PPPP "<<G4endl;
+       }
      }else{
 
-       if(npart>4000) {
-	 G4cout<<"max number of particles in part array (4000) has been exeeded"<<G4endl;
-       }else{
-	 part_xStart[npart]=xStart;
-	 part_yStart[npart]=yStart;
-	 part_zStart[npart]=zStart;
-	 part_tStart[npart]=tStart;
-	 part_xEnd[npart]=xEnd;
-	 part_yEnd[npart]=yEnd;
-	 part_zEnd[npart]=zEnd;
-	 part_tEnd[npart]=tEnd;
-	 part_pxStart[npart]=xStartDir;
-	 part_pyStart[npart]=yStartDir;
-	 part_pzStart[npart]=zStartDir;
-	 part_pxEnd[npart]=xEndDir;
-	 part_pyEnd[npart]=yEndDir;
-	 part_pzEnd[npart]=zEndDir;
-	 part_KEstart[npart]=KEStart;
-	 part_KEend[npart]=KEEnd;
-	 part_processStart[npart]= (G4int)processStart;
-	 part_processEnd[npart]= (G4int)processEnd;
-	 part_parentid[npart]= (G4int)parentid;
-	 part_trackid[npart]= (G4int)trackid;
-	 part_pid[npart]= (G4int)partcode;
-	 
-	 //if(npart%5==0) G4cout<<"npart "<<npart<<G4endl;
-	 
-	 npart++;
-       }
+       if(npart>10000) G4cout<<"max number of particles in part array (10000) has been exeeded"<<G4endl;
 
+       part_xStart[npart]=xStart;
+       part_yStart[npart]=yStart;
+       part_zStart[npart]=zStart;
+       part_tStart[npart]=tStart;
+       part_xEnd[npart]=xEnd;
+       part_yEnd[npart]=yEnd;
+       part_zEnd[npart]=zEnd;
+       part_tEnd[npart]=tEnd;
+       part_pxStart[npart]=xStartDir;
+       part_pyStart[npart]=yStartDir;
+       part_pzStart[npart]=zStartDir;
+       part_pxEnd[npart]=xEndDir;
+       part_pyEnd[npart]=yEndDir;
+       part_pzEnd[npart]=zEndDir;
+       part_KEstart[npart]=KEStart;
+       part_KEend[npart]=KEEnd;
+       part_processStart[npart]= (G4int)processStart;
+       part_processEnd[npart]= (G4int)processEnd;
+       part_parentid[npart]= (G4int)parentid;
+       part_trackid[npart]= (G4int)trackid;
+       part_pid[npart]= (G4int)partcode;
+
+       //if(npart%5==0) G4cout<<"npart "<<npart<<G4endl;
+       
+       npart++;
      }
+
      // Stats on neutrons and neutron capture
      if(partcode==2112) neutroncount++;
 
@@ -548,16 +543,20 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 	   //	   (*textout)<<eventcount<<" 0 0 0 0 "<<iStep<<" "<<partname<<" "<<partcode<<" "<<trackid<<" "<<parentid<<" "<<xStep<<" "<<yStep<<" "<<zStep<<" "<<xStepP<<" "<<yStepP<<" "<<zStepP<<" "<<tStep<<" "<<tStepP<<" "<<KEStep<<" "<<KEStepP<<" "<<TEdep<<" "<<StepL<<" "<<TrackL<<" "<<theProcess<<" "<<processStep<<" "<<ProcessStepSub<<" "<<TrackStatus<<" 0 "<<std::endl;
 
 	 }
+
+
+
 	 //	 if(iStep==0) trk->Fill();
        }
      }
-     if (npart == 4000 || nphot == 1000000) break; 
+
+     if (npart == 4000 || nphot == 1000000 || ncapturecount == 100) break; 
      // Done with Full track info on all non-photon particles
    }
 
      //   G4cout<<ncapturecount<<" captures "<<xofcaptcha.size()<<G4endl;
 
-   if(ncapturecount>30) G4cout<<"max number of captures in capt array (30) has been exeeded"<<G4endl;
+   if(ncapturecount>100) G4cout<<"max number of captures in capt array (100) has been exeeded"<<G4endl;
 
    for(int cc=0; cc<ncapturecount; cc++){
      //G4cout<<cc<<G4endl;
@@ -672,7 +671,6 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
    G4cout <<"Number of particles is: "<<n_trajectories<<G4endl;
    G4cout<<ncapturecount<<" captures"<<G4endl;
    G4cout <<nphot<<" Photons"<<G4endl;
-   G4cout <<npart<<" Particles"<<G4endl;
    G4cout <<"******************************************"<<G4endl;
    G4cout <<"******************************************"<<G4endl;
    G4cout <<"END EndOfEventAction"<<G4endl;

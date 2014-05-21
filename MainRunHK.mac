@@ -1,6 +1,5 @@
 /control/verbose 0
-
-/mygen/vecfile fluxesandtables/numu_center.txt
+/mygen/vecfile fluxesandtables/nuance_antinu_nd2k_cylinder_r551_z2200_Z_10000.txt
 
 /tracking/verbose 0
 /tracking/verbose 0
@@ -11,5 +10,5 @@
 /vis/verbose 0
 /run/verbose 0
 
-/run/beamOn 200
-
+/random/setSeeds 1234 1000
+/run/beamOn 1000

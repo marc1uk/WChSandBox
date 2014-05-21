@@ -106,12 +106,12 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
     {water = "Doped Scintillator";}
 
   
-  //  G4Sphere* expHall_box 
-  //    = new G4Sphere("waterTank",0.*m,5.*m,0.*deg,360.*deg,0.*deg,360.*deg);
+  //G4Sphere* expHall_box 
+  //= new G4Sphere("waterTank",0.*m,10.*m,0.*deg,360.*deg,0.*deg,180.*deg);
   
 
-  G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,5.5*m,11.*m,0.*deg,360.*deg); //change for TITUS
-  // G4Box* expHall_box = new G4Box("waterTank",1.5*m,1.5*m,1.5*m); //original version
+  G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,5.5*m,11.*m,0.*deg,360.*deg);
+  //  G4Box* expHall_box = new G4Box("waterTank",1.5*m,1.5*m,1.5*m); ANNIE
   // G4Box* expHall_box = new G4Box("waterTank",10.0*m,20.0*m,20.0*m);
 
   G4LogicalVolume* expHall_log
