@@ -81,7 +81,7 @@ def chktrack2(inputfile, outputfile):
 
             if pid > 10000:
                 continue;
-            tracklist.append(" $track %d %5.4f %5.4f %5.4f %5.4f %d\n" % (pid, pvec.E(), cosz, cosx, cosy, stat))
+            tracklist.append(" $track %d %5.4f %5.4f %5.4f %5.4f %d\n" % (pid, pvec.E(), cosx, cosy, cosz, stat))
         #insert the info line into the tracklist
         #infoline = " $info 0 0 %d\n" % j
         #tracklist.insert(infoline_index, infoline)
