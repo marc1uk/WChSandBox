@@ -21,13 +21,18 @@ def chktrack2(inputfile, outputfile):
     ran = ROOT.TRandom3(0);
 
     f = ROOT.TFile(inputfile);
-    tn = f.Get("nRooTracker");
+    tn = f.Get("nRooTracker"); # try to get NEUT tree
+    if not tn:
+        tn = f.Get("gRooTracker"); # try to get GENIE tree
     nevents = tn.GetEntries();
     fcomp = open(outputfile,"w");
     for j, entry in enumerate(tn):
         m_to_cm = 100.0
         GeV_to_MeV = 1000.0
-        mode = entry.NEneutmode
+        try:
+            mode = entry.NEneutmode
+        except AttributeError:
+            mode = entry.G2NeutEvtCode
         vtx = entry.EvtVtx
     
         x = vtx[0] * m_to_cm
