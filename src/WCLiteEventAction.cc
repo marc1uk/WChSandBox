@@ -56,7 +56,7 @@ WCLiteEventAction::WCLiteEventAction()
   
   nR = new TRandom3();
 
-  const int knphotmax=1000000;
+  const int knphotmax=10000000;
   phot_xStart = new G4double[knphotmax];
   phot_yStart = new G4double[knphotmax];
   phot_zStart = new G4double[knphotmax];
@@ -398,7 +398,7 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 	 isScatPhot=1;  
        }
 
-       if(nphot>1000000) G4cout<<"max number of photons in phot array (1000000) has been exeeded"<<G4endl;
+       if(nphot>knphotmax) G4cout<<"max number of photons in phot array (1000000) has been exeeded"<<G4endl;
 
        phot_xStart[nphot]=xStart;
        phot_yStart[nphot]=yStart;

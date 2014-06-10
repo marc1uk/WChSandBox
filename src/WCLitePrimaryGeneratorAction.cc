@@ -156,7 +156,7 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   G4bool useNuanceTextFormat = true;
   G4bool fullsim = true;
-  G4int vtxchooser=2;
+  G4int vtxchooser=1;
 
   // in cm
   G4double voffsetx = 0.0;

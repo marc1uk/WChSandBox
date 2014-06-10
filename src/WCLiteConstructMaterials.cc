@@ -72,8 +72,8 @@ void WCLiteDetectorConstruction::ConstructMaterials()
  density = 1.00*g/cm3;
  G4Material* DopedWater
     = new G4Material("Doped Water",density,2);
- DopedWater->AddMaterial(Water,99.5*perCent);
- DopedWater->AddElement(Gd,0.5*perCent);
+ DopedWater->AddMaterial(Water,99.9*perCent);
+ DopedWater->AddElement(Gd,0.1*perCent);
 
 
 //---Gd doped Scintillator
