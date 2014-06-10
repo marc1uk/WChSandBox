@@ -58,6 +58,8 @@ class WCLiteEventAction : public G4UserEventAction
   // out text file
   fstream* textout;
 
+  const int knphotmax = 10000000;
+
   TFile *no;
   TTree *nt,*ht,*trk,*gtrk,*mul,*capt,*gcapt;
   TTree *evttree;

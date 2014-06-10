@@ -56,7 +56,7 @@ WCLiteEventAction::WCLiteEventAction()
   
   nR = new TRandom3();
 
-  const int knphotmax=10000000;
+  // const int knphotmax=10000000;
   phot_xStart = new G4double[knphotmax];
   phot_yStart = new G4double[knphotmax];
   phot_zStart = new G4double[knphotmax];
