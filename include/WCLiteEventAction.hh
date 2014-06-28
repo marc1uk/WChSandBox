@@ -39,6 +39,16 @@
 #include "TRandom3.h"
 
 
+// Modified 2014-06-13 by MSM ?!? 
+//  - Added declaration of knphotmax here for general usage
+//  - Increased photon buffer by factor 10 (1e6 -> 1e7)
+// Remodified 2014-06-16 by MJW ##
+// Initialization moved outside of class
+
+const int knphotmax = 10000000;
+const int knpartmax = 10000;
+const int kcapmax = 100;
+
 class G4Event;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -57,8 +67,6 @@ class WCLiteEventAction : public G4UserEventAction
 
   // out text file
   fstream* textout;
-
-  const int knphotmax = 10000000;
 
   TFile *no;
   TTree *nt,*ht,*trk,*gtrk,*mul,*capt,*gcapt;

@@ -49,14 +49,13 @@ WCLiteEventAction::WCLiteEventAction()
 {
   eventcount=1;
 
-  //  textout = new std::fstream("TextOut.txt",std::ios::out);
+  textout = new std::fstream("TextOut.txt",std::ios::out);
 
   no = new TFile("FullEvent.root","RECREATE");
   evttree = new TTree("EventTree","EventTree");
   
   nR = new TRandom3();
 
-  // const int knphotmax=10000000;
   phot_xStart = new G4double[knphotmax];
   phot_yStart = new G4double[knphotmax];
   phot_zStart = new G4double[knphotmax];
@@ -80,7 +79,6 @@ WCLiteEventAction::WCLiteEventAction()
   phot_pyEnd = new G4double[knphotmax];
   */
   
-  const int knpartmax = 10000;
   part_xStart = new G4double[knpartmax];
   part_yStart = new G4double[knpartmax];
   part_zStart = new G4double[knpartmax];
@@ -103,7 +101,6 @@ WCLiteEventAction::WCLiteEventAction()
   part_trackid = new G4int[knpartmax];
   part_pid = new G4int[knpartmax];
 
-  const int kcapmax = 100;
   capt_num = new G4int[kcapmax];
   capt_nucleus = new G4int[kcapmax];
   capt_pid = new G4int[kcapmax];
@@ -176,11 +173,11 @@ WCLiteEventAction::WCLiteEventAction()
  
 WCLiteEventAction::~WCLiteEventAction()
 {
-  //   no->cd();
-  //   evttree->Write();
+   no->cd();
+   evttree->Write();
    no->Close();
 
-   //   textout->close();
+   textout->close();
 
    delete phot_xStart;
    delete phot_yStart;
@@ -365,7 +362,23 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
      TEStart = mypnt->GetTotalEnergy();
      KEStart = mypnt->GetKineticEnergy();
 
-     //     if( (partcode==100) && (tStart<100) ) G4cout<<"hup "<<tStart<<G4endl;
+     //     if( (partcode==100) && (tStart<100) ) G4cout<<"hup "<<tStart<<G4endl
+     /*;
+     if(partcode==2112&&processEnd==11){
+       G4cout<<"NEUTRONSTOPPED AND DID CAPTURE!!!"<<G4endl;
+       G4cout<<"npoints: "<<numPoints<<G4endl;
+       G4cout<<KEStart<<" "<<(tEnd-tStart)<<" "<<(zEnd-zStart)<<G4endl;
+     }
+
+     if(partcode==2112&&processEnd!=11){
+       G4cout<<"NEUTRONSTOPPED BUT DIDN'T CAPTURE!!!"<<G4endl;
+       G4cout<<"npoints: "<<numPoints<<G4endl;
+       G4cout<<KEStart<<" "<<(tEnd-tStart)<<" "<<(zEnd-zStart)<<G4endl;
+     }
+     */
+
+
+
 
      TString sProcess = mypnt->GetProcessName();
      if(sProcess=="Transportation") processStart=0;
@@ -420,7 +433,7 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
        }
      }else{
 
-       if(npart>10000) G4cout<<"max number of particles in part array (10000) has been exeeded"<<G4endl;
+       if(npart>knpartmax) G4cout<<"max number of particles in part array (10000) has been exeeded"<<G4endl;
 
        part_xStart[npart]=xStart;
        part_yStart[npart]=yStart;
@@ -549,14 +562,12 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 	 //	 if(iStep==0) trk->Fill();
        }
      }
-
-     if (npart == 4000 || nphot == 1000000 || ncapturecount == 100) break; 
      // Done with Full track info on all non-photon particles
    }
 
      //   G4cout<<ncapturecount<<" captures "<<xofcaptcha.size()<<G4endl;
 
-   if(ncapturecount>100) G4cout<<"max number of captures in capt array (100) has been exeeded"<<G4endl;
+   if(ncapturecount>kcapmax) G4cout<<"max number of captures in capt array (100) has been exeeded"<<G4endl;
 
    for(int cc=0; cc<ncapturecount; cc++){
      //G4cout<<cc<<G4endl;
