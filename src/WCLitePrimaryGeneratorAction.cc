@@ -172,7 +172,7 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // 1 means vertices are derived from the cardfile
   // 2 means randomized in the volume specified by the parameters below
 
-  G4int vtxchooser=1; 
+  G4int vtxchooser=0; 
 
   // in cm
   G4double voffsetx = 0.0;
