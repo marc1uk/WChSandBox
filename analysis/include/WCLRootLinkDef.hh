@@ -19,6 +19,8 @@
 #pragma link C++ class WCLTreeReader+;
 #pragma link C++ class WCLTreeWriter+;
 
+#pragma link C++ class EventDisplay+;
+
 #pragma link C++ class SandBoxPMTcoverageBox+;
 #pragma link C++ class SandBoxPMTcoverage+;
 
