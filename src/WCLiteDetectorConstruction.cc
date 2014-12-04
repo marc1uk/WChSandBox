@@ -104,7 +104,7 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
   // G4Box* expHall_box = new G4Box("waterTank",1.5*m,1.5*m,1.5*m); 
 
   // new ANNIE geometry (cylinder w/ 2.5m radius, 3.5m length)
-  G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,1.25*m,1.75*m,0.*deg,360.*deg);
+  //  G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,1.25*m,1.75*m,0.*deg,360.*deg);
 
   // new ANNIE geometry, fiducial volume (cylinder w/ 5.5m radius, 22m length)
   // G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,0.5*m,1.0*m,0.*deg,360.*deg)
@@ -113,7 +113,7 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
   // TITUS geometry (cylinder w/ 5.5m radius, 22m length)
   // G4Tubs* expHall_box = new G4Tubs("waterTank",0.*m,5.5*m,11.*m,0.*deg,360.*deg);
 
-  //G4Sphere* expHall_box = new G4Sphere("waterTank",0.*m,10.*m,0.*deg,360.*deg,0.*deg,180.*deg);
+  G4Sphere* expHall_box = new G4Sphere("waterTank",0.*m,8.*m,0.*deg,360.*deg,0.*deg,180.*deg);
   //-------------------------------------------------------------------------  
   
 
