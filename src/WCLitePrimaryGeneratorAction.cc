@@ -83,9 +83,7 @@ WCLitePrimaryGeneratorAction::WCLitePrimaryGeneratorAction(
   tcardfile->Branch("py",mpy,"py[ntrks]/D"); 
   tcardfile->Branch("pz",mpz,"pz[ntrks]/D");
   tcardfile->Branch("KE",mKE,"KE[ntrks]/D");
-  
-
-  
+   
   tcardfile->Branch("mMRDhitlayer",mMRDhitlayer,"mMRDhitlayer[nMRDlayers]/I");
   tcardfile->Branch("mMRDhitorientation",mMRDhitorientation,"mMRDhitorientation[nMRDlayers]/I");
   tcardfile->Branch("mMRDhitEdep",mMRDhitEdep,"mMRDhitEdep[nMRDlayers]/D");
@@ -174,13 +172,30 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   G4int vtxchooser=1; 
 
+  // Modified 2014-06-13 by MJW 
+  //  - Default for dirchooser is 1 
+  //    (i.e., from random vertices to reading from card file)
+  // 0 means all directions are forced to z-axis
+  // 1 means directions are derived from the cardfile
+  // 2 means randomized in 4PI
+
+  G4int dirchooser = 1;
+
   // in cm
   G4double voffsetx = 0.0;
   G4double voffsety = 0.0;
-  G4double voffsetz = -50.0;
+  //  G4double voffsetz = -50.0;
+  G4double voffsetz = 0.0;
+
+  G4int iscubic=0;
+
+  // if cubic
   G4double vscalex = 150.00;
   G4double vscaley = 150.00;
   G4double vscalez = 50.00;
+  // if cylindrical
+  G4double vscaleR = 125.00;
+  if(iscubic==0) vscalez=350.;
 
   if(vtxchooser==0) G4cout<<"Vertices are forced to 0!!!"<<G4endl;
   if(vtxchooser==1) G4cout<<"Using vertices from cardfile"<<G4endl;
@@ -188,6 +203,13 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			  <<" "<<voffsety<<" "<<voffsetz<<" scales: "
 			  <<vscalex<<" "<<vscaley<<" "<<vscalez<<G4endl;}
     
+
+  if(dirchooser==0) G4cout<<"directions are forced to z-axis!!!"<<G4endl;
+  if(dirchooser==1) G4cout<<"Using directions from cardfile"<<G4endl;
+  if(dirchooser==2) G4cout<<"Randomized directions" <<G4endl;
+
+
+
   // Do for every event
 
   if (useMulineEvt)
@@ -290,7 +312,18 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 		      G4ThreeVector dir = G4ThreeVector(atof(token[3]),
 							atof(token[4]),
 							atof(token[5]));
-		      		      
+		      		
+
+		      if(dirchooser==0) dir = G4ThreeVector(0,0,1);
+		      if(dirchooser==2){
+			Double_t theta = (mR->Rndm())*3.141592653;
+			Double_t phi = (mR->Rndm())*3.141592653*2;
+			Double_t dx = sin(theta)*cos(phi);
+			Double_t dy = sin(theta)*sin(phi);
+			Double_t dz = cos(theta);
+			dir = G4ThreeVector(dx,dy,dz);
+		      }
+
 		      idvec.push_back( atoi(token[1]) );
 		      dirvec.push_back(dir);
 		      Evec.push_back(energy);		      
@@ -321,9 +354,18 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 		  if(vtxchooser==2){
 		    // force random vertex with fractional offset and scale
-		    mvtxx = (((mR->Rndm())-0.5)*vscalex + voffsetx);    
-		    mvtxy = (((mR->Rndm())-0.5)*vscaley + voffsety);   
-		    mvtxz = (((mR->Rndm())-0.5)*vscalez + voffsetz);
+
+		    if(iscubic==1){
+		      mvtxx = (((mR->Rndm())-0.5)*vscalex + voffsetx);    
+		      mvtxy = (((mR->Rndm())-0.5)*vscaley + voffsety);   
+		      mvtxz = (((mR->Rndm())-0.5)*vscalez + voffsetz);
+		    } else{
+		      mvtxz = (((mR->Rndm())-0.5)*vscalez + voffsetz);
+		      double rdR = (mR->Rndm())*vscaleR;
+		      double rdphi = (mR->Rndm())*2*3.14159;
+		      mvtxx = rdR*cos(rdphi) + voffsetx;
+		      mvtxy = rdR*sin(rdphi) + voffsety;		      
+		    }
 		  }
 
 		  //G4cout<<"test1 "<<mvtxx<<" "<<mvtxy<<" "<<mvtxz<<G4endl;
