@@ -20,7 +20,7 @@ class WCSimIsochron : public TObject {
  public: 
 
   WCSimIsochron();
-  WCSimIsochron(Double_t nBinsV, Double_t binscale);
+//  WCSimIsochron(Double_t nBinsV, Double_t binscale);
   ~WCSimIsochron();
 
   void Reset();
