@@ -30,8 +30,8 @@ class WCLTreeWriter : public TObject {
   void InitializeEvent();
   void AddWholeBranches(WCLTreeReader* fEvent, int addphot, int addpart, int addcapt, int addmrd, int addgen);
   void AddPhoton(WCSimTrueLight* fPhot);
-  void AddParticle(WCSimTruePart* fPart);
-  void AddCapture(WCSimTrueCapture* fCapt);
+//  void AddParticle(WCSimTruePart* fPart);
+//  void AddCapture(WCSimTrueCapture* fCapt);
   void FillEvent();
   
   void WriteTreeToFile();
