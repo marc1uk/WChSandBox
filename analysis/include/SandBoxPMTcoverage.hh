@@ -11,8 +11,8 @@ class SandBoxPMTcoverage : public TObject {
 
   ~SandBoxPMTcoverage();
 
-  void SetBoxDimensions(double xl, double xh, double yl, double yh,
-			double zl, double zh);
+//  void SetBoxDimensions(double xl, double xh, double yl, double yh,
+//			double zl, double zh);
 
   void SetWallConfiguration(int mcase, int mmode, int mshapePMT, double msizePMT, double NrowPMT, double NcolPMT, double QE_PMT, int mshapeLAPPD, double msizeLAPPD, double NrowLAPPD, double NcolLAPPD, double QE_LAPPD);
 
