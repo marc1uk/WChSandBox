@@ -74,7 +74,7 @@ rootcint : $(ROOTSRC)
 shared: $(ROOTDICT) $(ROOTSRC) $(ROOTOBJS)
 	@echo "<**Shared**>"
 ifeq ($(UNAME), Darwin) 
-	g++ -dynamiclib $(ROOTLIBS) $(ROOTGLIBS) -O $(ROOTOBJS) -lMinuit $(WCSIM)/libWCSimRoot.so -o $(ROOTSO)
+	g++ -dynamiclib $(ROOTLIBS) $(ROOTGLIBS) -O $(ROOTOBJS) -lMinuit -o $(ROOTSO)
 endif
 ifeq ($(UNAME), Linux) 
 	g++ -shared $(ROOTLIBS) $(ROOTGLIBS) -O $(ROOTOBJS) -o $(ROOTSO)
@@ -91,7 +91,7 @@ reco.o : reco.cc
 
 reco : reco.o $(ROOTSO)
 	@echo "Making reco executable for WCSimAnalysis..."
-	g++ -o reco $(CXXFLAGS) reco.o $(WCSIM)/libWCSimRoot.so $(ROOTSO) $(ROOTLIBS) $(ROOTGLIBS) -lMinuit 
+	g++ -o reco $(CXXFLAGS) reco.o $(ROOTSO) $(ROOTLIBS) $(ROOTGLIBS) -lMinuit 
 
 DEPS = $(ROOTOBJS:$(TMPDIR)/%.o=$(TMPDIR)/%.d)
 
