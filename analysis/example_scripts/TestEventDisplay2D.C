@@ -4,11 +4,11 @@
   gSystem->Load("libGeom");
   gSystem->Load("libEve");
   gSystem->Load("libMinuit");
-  gSystem->Load("lib/EventDisplay.so");
+  gSystem->Load("lib/libWCLAnalysis.so");
 
   #include "TRandom3.h"
   #include <iomanip>
-  #include "include/EventDisplay3D.hh"
+  #include "include/EventDisplay2D.hh"
 
   TRandom3 numberp(42484);
 
