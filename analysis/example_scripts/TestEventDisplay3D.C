@@ -4,7 +4,7 @@
   gSystem->Load("libGeom");
   gSystem->Load("libEve");
   gSystem->Load("libMinuit");
-  gSystem->Load("lib/EventDisplay.so");
+  gSystem->Load("lib/libWCLAnalysis.so");
 
   #include "TRandom3.h"
   #include <iomanip>
