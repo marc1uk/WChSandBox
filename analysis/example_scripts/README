@@ -1,0 +1,10 @@
+// Example Scripts for use in the analysis tools for WChSandBox
+
+Order of simple examples:
+1) SimpleRead
+2) SimpleReadWrite
+3) AddYourOwnPhotons
+4) StudyCoverages
+5) SimpleAnalysis
+6) TestEventDisplay2(3)D.C
+7) RecoLite.C
