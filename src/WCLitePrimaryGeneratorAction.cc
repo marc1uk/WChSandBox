@@ -83,7 +83,7 @@ WCLitePrimaryGeneratorAction::WCLitePrimaryGeneratorAction(
   tcardfile->Branch("py",mpy,"py[ntrks]/D"); 
   tcardfile->Branch("pz",mpz,"pz[ntrks]/D");
   tcardfile->Branch("KE",mKE,"KE[ntrks]/D");
-   
+ /*  
   tcardfile->Branch("mMRDhitlayer",mMRDhitlayer,"mMRDhitlayer[nMRDlayers]/I");
   tcardfile->Branch("mMRDhitorientation",mMRDhitorientation,"mMRDhitorientation[nMRDlayers]/I");
   tcardfile->Branch("mMRDhitEdep",mMRDhitEdep,"mMRDhitEdep[nMRDlayers]/D");
@@ -91,7 +91,7 @@ WCLitePrimaryGeneratorAction::WCLitePrimaryGeneratorAction(
   tcardfile->Branch("mMRDhitx",mMRDhitx,"mMRDhitx[nMRDlayers]/D");
   tcardfile->Branch("mMRDhity",mMRDhity,"mMRDhity[nMRDlayers]/D");
   tcardfile->Branch("mMRDhitz",mMRDhitz,"mMRDhitz[nMRDlayers]/D");
-  
+  */
 
   //  tcardfile->Branch("issum",&msum); 
   //  tcardfile->Branch("Nneut",&nneut);
@@ -275,7 +275,7 @@ void WCLitePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 		
 		if(token[0]=="track"){
 
-		  if( atoi(token[1]) == 14 ){
+		  if( abs(atoi(token[1])) == 14 || abs(atoi(token[1])) == 12){
 		    //read in neutrino line
 		    beampdg = atoi(token[1]);
 		    beamenergy = atof(token[2])*MeV;

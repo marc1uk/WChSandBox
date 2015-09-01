@@ -715,7 +715,7 @@ void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
 
      //     if(pc%1000==0) G4cout<<"pc "<<pc<<G4endl;
 
-     if(pc>1000000) G4cout<<"MAX number of photons in phot array (1,000,000) has been exeeded!!!"<<G4endl;
+     if(pc>knphotmax) G4cout<<"MAX number of photons in phot array (1,000,000) has been exeeded!!!"<<G4endl;
 
      for(int cc=0; cc<ncapturecount; cc++){
        if( (phot_tStart[pc]-capt_t0[cc])<10 ){

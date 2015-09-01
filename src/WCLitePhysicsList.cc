@@ -621,27 +621,31 @@ void WCLitePhysicsList::ConstructHad()
 	  // GHEISHA = Original Geant4 default model 
 	  // BERTINI = Bertini intra-nuclear cascade model
 	  // BINARY  = Binary intra-nuclear cascade model
-	  if (gheishahad) {
-	    G4LENeutronInelastic* theInelasticModel = new G4LENeutronInelastic;
-	    theInelasticModel->SetMinEnergy(19*MeV);
-	    theInelasticProcess->RegisterMe(theInelasticModel);
-	  }
-	  else if (bertinihad) {
+//	  if (gheishahad) {
+//	    G4LENeutronInelastic* theInelasticModel = new G4LENeutronInelastic;
+//	    theInelasticModel->SetMinEnergy(19*MeV);
+//	    theInelasticProcess->RegisterMe(theInelasticModel);
+//	  }
+//	  else if (bertinihad) {
 	    G4CascadeInterface* theBertiniModel = new G4CascadeInterface;
 	    theBertiniModel->SetMinEnergy(19*MeV);
 	    theInelasticProcess->RegisterMe(theBertiniModel);
-	  }
-	  else if (binaryhad) {
-	    G4BinaryCascade* theBinaryModel = new G4BinaryCascade();
-	    theBinaryModel->SetMinEnergy(19*MeV);
-	    theInelasticProcess->RegisterMe(theBinaryModel);
-	  }
-	  else {
-	    G4cout << "No secondary interaction model chosen! Using G4 BINARY." << G4endl;
-	    G4BinaryCascade* theBinaryModel = new G4BinaryCascade();
-	    theBinaryModel->SetMinEnergy(19*MeV);
-	    theInelasticProcess->RegisterMe(theBinaryModel);
-	  }
+//	  }
+//	  else if (binaryhad) {
+//	    G4BinaryCascade* theBinaryModel = new G4BinaryCascade();
+//	    theBinaryModel->SetMinEnergy(19*MeV);
+//	    theInelasticProcess->RegisterMe(theBinaryModel);
+//	  }
+//	  else {
+//	    G4cout << "No secondary interaction model chosen! Using G4 BINARY." << G4endl;
+//	    G4BinaryCascade* theBinaryModel = new G4BinaryCascade();
+//	    theBinaryModel->SetMinEnergy(19*MeV);
+//	    theInelasticProcess->RegisterMe(theBinaryModel);
+            //NWP: Adding also the G4LENeutronInelastic model because G4BinaryCascade only valid up to 25GeV
+//            G4LENeutronInelastic* theInelasticModel = new G4LENeutronInelastic;
+//	    theInelasticModel->SetMinEnergy(25*GeV);
+//	    theInelasticProcess->RegisterMe(theInelasticModel);
+//	  }
 	  
 	  G4HENeutronInelastic* theHEInelasticModel = new G4HENeutronInelastic;
 	  theInelasticProcess->RegisterMe(theHEInelasticModel);
