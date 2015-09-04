@@ -45,8 +45,8 @@
 // Remodified 2014-06-16 by MJW ##
 // Initialization moved outside of class
 
-const int knphotmax = 10000000;
-const int knpartmax = 10000;
+const int knphotmax = 1000000000;
+const int knpartmax = 1000000;
 const int kcapmax = 100;
 
 class G4Event;
