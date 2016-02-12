@@ -1,0 +1,27 @@
+/vis/open OGL 800x800-0+0
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 20 20
+#/vis/viewer/set/viewpointThetaPhi 0 0
+#/vis/viewer/panTo -1 0
+/vis/viewer/zoom 1.5
+#/vis/scene/add/axes 0 0 0 5 m
+/vis/scene/add/scale 2 m x 1 0 0 manual 1 0 0 m
+/vis/scene/add/scale 2 m y 0 1 0 manual 0 1 0 m 
+/vis/scene/add/scale 2 m z 0 0 1 manual 0 0 1 m
+/vis/viewer/set/defaultTextColour 1 1 1
+/vis/scene/add/text 1 -0.2 0 m 16 0 0 x
+/vis/scene/add/text 0 0.8 -0.1 m 16 0 0 y
+/vis/scene/add/text 0 -0.2 1 m 16 0 0 z
+#text [x] [y] [z] [unit] [font_size] [x_offset] [y_offset] [text]
+#/vis/scene/add/hits
+#/vis/scene/add/trajectories
+#/vis/filtering/trajectories/create/originVolumeFilter
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDscints
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDsteels
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDalus
+#/vis/filtering/trajectories/originVolumeFilter-0/verbose false
+#/vis/filtering/trajectories/mode hard
+
+#/vis/scene/endOfEventAction accumulate
+
+
