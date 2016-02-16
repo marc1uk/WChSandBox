@@ -1,3 +1,4 @@
-# source setup_annie.sh first.
-# then source setupWChSandBox.sh
+# source setupWChSandBox.sh
+# Run a test with:
+# bin/Linux-g++/WChSandBox MainRun.mac
 # this procedure will be changed later.
