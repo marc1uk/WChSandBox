@@ -136,7 +136,7 @@ int main(int argc,char** argv)
 #else
       session = new G4UIterminal();
 #endif    
-      UI->ApplyCommand("/control/execute vis.mac"); 
+      UI->ApplyCommand("/control/execute mac/vis.mac"); 
       UI->ApplyCommand("/mygen/vecfile fluxesandtables/numu_center.txt");
       session->SessionStart();
       delete session;

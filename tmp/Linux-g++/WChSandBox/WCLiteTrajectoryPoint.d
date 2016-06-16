@@ -1,228 +1,232 @@
-/annie/app/users/txin/WChSandBox/tmp/Linux-g++/WChSandBox/WCLiteTrajectoryPoint.o /annie/app/users/txin/WChSandBox/tmp/Linux-g++/WChSandBox/WCLiteTrajectoryPoint.d: src/WCLiteTrajectoryPoint.cc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4TrajectoryPoint.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VTrajectoryPoint.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/globals.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ios.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Types.hh \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/complex \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++config.h \
- /usr/include/bits/wordsize.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/os_defines.h \
- /usr/include/features.h /usr/include/sys/cdefs.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/cpu_defines.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/cpp_type_traits.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/type_traits.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cmath \
- /usr/include/math.h /usr/include/bits/huge_val.h \
- /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
- /usr/include/bits/inf.h /usr/include/bits/nan.h \
- /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/cmath.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/istream \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ios \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/iosfwd \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stringfwd.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/postypes.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cwchar \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cstddef \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stddef.h \
+/home/vince/ANNIE/Simulation/WChSandBox/tmp/Linux-g++/WChSandBox/WCLiteTrajectoryPoint.o /home/vince/ANNIE/Simulation/WChSandBox/tmp/Linux-g++/WChSandBox/WCLiteTrajectoryPoint.d: src/WCLiteTrajectoryPoint.cc \
+ /usr/include/stdc-predef.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/tracking/include/G4TrajectoryPoint.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/tracking/include/G4VTrajectoryPoint.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/globals.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ios.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4Types.hh \
+ /usr/include/c++/4.8/complex \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
+ /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
+ /usr/include/c++/4.8/bits/cpp_type_traits.h \
+ /usr/include/c++/4.8/ext/type_traits.h /usr/include/c++/4.8/cmath \
+ /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
+ /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
+ /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
+ /usr/include/x86_64-linux-gnu/bits/inf.h \
+ /usr/include/x86_64-linux-gnu/bits/nan.h \
+ /usr/include/x86_64-linux-gnu/bits/mathdef.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/c++/4.8/sstream /usr/include/c++/4.8/istream \
+ /usr/include/c++/4.8/ios /usr/include/c++/4.8/iosfwd \
+ /usr/include/c++/4.8/bits/stringfwd.h \
+ /usr/include/c++/4.8/bits/memoryfwd.h \
+ /usr/include/c++/4.8/bits/postypes.h /usr/include/c++/4.8/cwchar \
  /usr/include/wchar.h /usr/include/stdio.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h \
- /usr/include/bits/wchar.h /usr/include/xlocale.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/exception \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/char_traits.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/functexcept.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/exception_defines.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/numeric_traits.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/move.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/concept_check.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator_base_types.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator_base_funcs.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/debug/debug.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/localefwd.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++locale.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/clocale \
- /usr/include/locale.h /usr/include/bits/locale.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cctype \
- /usr/include/ctype.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/endian.h \
- /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/ios_base.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/atomicity.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/gthr.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/gthr-default.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h \
+ /usr/include/xlocale.h /usr/include/c++/4.8/exception \
+ /usr/include/c++/4.8/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.8/bits/char_traits.h \
+ /usr/include/c++/4.8/bits/stl_algobase.h \
+ /usr/include/c++/4.8/bits/functexcept.h \
+ /usr/include/c++/4.8/bits/exception_defines.h \
+ /usr/include/c++/4.8/ext/numeric_traits.h \
+ /usr/include/c++/4.8/bits/stl_pair.h /usr/include/c++/4.8/bits/move.h \
+ /usr/include/c++/4.8/bits/concept_check.h \
+ /usr/include/c++/4.8/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.8/debug/debug.h \
+ /usr/include/c++/4.8/bits/stl_iterator.h \
+ /usr/include/c++/4.8/bits/localefwd.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h \
+ /usr/include/c++/4.8/clocale /usr/include/locale.h \
+ /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/4.8/cctype \
+ /usr/include/ctype.h /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h \
+ /usr/include/c++/4.8/bits/ios_base.h \
+ /usr/include/c++/4.8/ext/atomicity.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h \
  /usr/include/pthread.h /usr/include/sched.h /usr/include/time.h \
- /usr/include/bits/sched.h /usr/include/bits/time.h \
- /usr/include/bits/pthreadtypes.h /usr/include/bits/setjmp.h \
- /usr/include/unistd.h /usr/include/bits/posix_opt.h \
- /usr/include/bits/environments.h /usr/include/bits/confname.h \
- /usr/include/getopt.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/atomic_word.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_classes.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/string \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++allocator.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/new \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/ostream_insert.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cxxabi-forced.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_function.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/backward/binders.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/initializer_list \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_classes.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/streambuf.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_facets.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cwctype \
+ /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h \
+ /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h \
+ /usr/include/c++/4.8/bits/locale_classes.h /usr/include/c++/4.8/string \
+ /usr/include/c++/4.8/bits/allocator.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h \
+ /usr/include/c++/4.8/ext/new_allocator.h /usr/include/c++/4.8/new \
+ /usr/include/c++/4.8/bits/ostream_insert.h \
+ /usr/include/c++/4.8/bits/cxxabi_forced.h \
+ /usr/include/c++/4.8/bits/stl_function.h \
+ /usr/include/c++/4.8/backward/binders.h \
+ /usr/include/c++/4.8/bits/range_access.h \
+ /usr/include/c++/4.8/bits/basic_string.h \
+ /usr/include/c++/4.8/bits/basic_string.tcc \
+ /usr/include/c++/4.8/bits/locale_classes.tcc \
+ /usr/include/c++/4.8/streambuf /usr/include/c++/4.8/bits/streambuf.tcc \
+ /usr/include/c++/4.8/bits/basic_ios.h \
+ /usr/include/c++/4.8/bits/locale_facets.h /usr/include/c++/4.8/cwctype \
  /usr/include/wctype.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/ctype_base.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/streambuf_iterator.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/ctype_inline.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_facets.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/ostream.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/istream.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/sstream.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/iostream \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/algorithm \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algo.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cstdlib \
- /usr/include/stdlib.h /usr/include/bits/waitflags.h \
- /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/sys/sysmacros.h \
- /usr/include/alloca.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/algorithmfwd.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_heap.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tempbuf.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_construct.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_uninitialized.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4String.hh \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h \
+ /usr/include/c++/4.8/bits/streambuf_iterator.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h \
+ /usr/include/c++/4.8/bits/locale_facets.tcc \
+ /usr/include/c++/4.8/bits/basic_ios.tcc /usr/include/c++/4.8/ostream \
+ /usr/include/c++/4.8/bits/ostream.tcc \
+ /usr/include/c++/4.8/bits/istream.tcc \
+ /usr/include/c++/4.8/bits/sstream.tcc /usr/include/c++/4.8/iostream \
+ /usr/include/c++/4.8/algorithm /usr/include/c++/4.8/utility \
+ /usr/include/c++/4.8/bits/stl_relops.h \
+ /usr/include/c++/4.8/bits/stl_algo.h /usr/include/c++/4.8/cstdlib \
+ /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h \
+ /usr/include/x86_64-linux-gnu/sys/select.h \
+ /usr/include/x86_64-linux-gnu/bits/select.h \
+ /usr/include/x86_64-linux-gnu/bits/sigset.h \
+ /usr/include/x86_64-linux-gnu/sys/sysmacros.h /usr/include/alloca.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+ /usr/include/c++/4.8/bits/algorithmfwd.h \
+ /usr/include/c++/4.8/bits/stl_heap.h \
+ /usr/include/c++/4.8/bits/stl_tempbuf.h \
+ /usr/include/c++/4.8/bits/stl_construct.h \
+ /usr/include/c++/4.8/ext/alloc_traits.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4String.hh \
  /usr/include/libio.h /usr/include/_G_config.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cstring \
- /usr/include/string.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4String.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/templates.hh \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/climits \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/limits.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/syslimits.h \
- /usr/include/limits.h /usr/include/bits/posix1_lim.h \
- /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
- /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicalConstants.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Units/PhysicalConstants.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Units/SystemOfUnits.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4SystemOfUnits.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ExceptionSeverity.hh \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/vector \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_bvector.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/vector.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/map \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_map.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_multimap.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ThreeVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/ThreeVector.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Utility/defs.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/ThreeVector.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Allocator.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4AllocatorPool.hh \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/c++/4.8/cstring /usr/include/string.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4String.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/templates.hh \
+ /usr/include/c++/4.8/limits /usr/include/c++/4.8/climits \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicalConstants.hh \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Units/PhysicalConstants.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Units/defs.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Units/SystemOfUnits.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4SystemOfUnits.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ExceptionSeverity.hh \
+ /usr/include/c++/4.8/vector \
+ /usr/include/c++/4.8/bits/stl_uninitialized.h \
+ /usr/include/c++/4.8/bits/stl_vector.h \
+ /usr/include/c++/4.8/bits/stl_bvector.h \
+ /usr/include/c++/4.8/bits/vector.tcc /usr/include/c++/4.8/map \
+ /usr/include/c++/4.8/bits/stl_tree.h /usr/include/c++/4.8/bits/stl_map.h \
+ /usr/include/c++/4.8/bits/stl_multimap.h \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ThreeVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/globals.hh \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/ThreeVector.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/defs.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/ThreeVector.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4Allocator.hh \
+ /usr/include/c++/4.8/cstddef \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4AllocatorPool.hh \
  include/WCLiteTrajectoryPoint.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Allocator.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ios.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/globals.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ParticleDefinition.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ParticleDefinition.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Track.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4LogicalVolume.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Region.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Region.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VPhysicalVolume.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/geomdefs.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4RotationMatrix.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/Rotation.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationInterfaces.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/LorentzVector.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/LorentzVector.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/AxisAngle.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/AxisAngle.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationInterfaces.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationX.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationX.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationY.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationY.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationZ.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/RotationZ.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/CLHEP/Vector/Rotation.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VPhysicalVolume.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ios.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4ParticleDefinition.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4ParticleDefinition.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Track.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4LogicalVolume.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4Types.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4Region.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4String.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4Region.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4VPhysicalVolume.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/HEPGeometry/include/geomdefs.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4RotationMatrix.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ThreeVector.hh \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/Rotation.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationInterfaces.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/LorentzVector.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/LorentzVector.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/ZMxpv.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/AxisAngle.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/AxisAngle.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationInterfaces.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationX.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationX.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationY.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationY.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationZ.h \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/RotationZ.icc \
+ /home/vince/GEANT/CLHEP-2.1.3.1/include/CLHEP/Vector/Rotation.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4VPhysicalVolume.icc \
  /usr/include/assert.h \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4LogicalVolume.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4DynamicParticle.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ParticleDefinition.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4LorentzVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ParticleMomentum.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ElectronOccupancy.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4DynamicParticle.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4TrackStatus.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4TouchableHandle.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VTouchable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VTouchable.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ReferenceCountedHandle.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4VUserTrackInformation.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Material.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Element.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Isotope.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4IonisParamElm.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4IsotopeVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ElementTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4MaterialPropertiesTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4MaterialPropertyVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsOrderedFreeVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsVector.hh \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/codecvt.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cstdio \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/basic_file.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsVectorCache.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsVectorType.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsVector.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4PhysicsOrderedFreeVector.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4MaterialPropertiesTable.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4IonisParamMat.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4SandiaTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4OrderedTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4DataVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4DataVector.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4ElementVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4MaterialTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Track.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Step.hh \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/iomanip \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4StepPoint.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4SteppingControl.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4StepStatus.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4StepPoint.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4TrackVector.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Step.icc \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Track.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4Step.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4AttDefStore.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4AttDef.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4TypeKey.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4AttValue.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4UnitsTable.hh \
- /annie/app/users/wetstein/geant4.9.6.p04-build/include/Geant4/G4UnitsTable.icc
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4LogicalVolume.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4VPhysicalVolume.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4DynamicParticle.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4ParticleDefinition.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/HEPGeometry/include/G4LorentzVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4ParticleMomentum.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4ElectronOccupancy.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/particles/management/include/G4DynamicParticle.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4TrackStatus.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4TouchableHandle.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4VTouchable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/geometry/management/include/G4VTouchable.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4ReferenceCountedHandle.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4Allocator.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4VUserTrackInformation.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4Material.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4Element.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4Isotope.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4IonisParamElm.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4IsotopeVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4ElementTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4MaterialPropertiesTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4MaterialPropertyVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsOrderedFreeVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsVector.hh \
+ /usr/include/c++/4.8/fstream /usr/include/c++/4.8/bits/codecvt.h \
+ /usr/include/c++/4.8/cstdio \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
+ /usr/include/c++/4.8/bits/fstream.tcc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsVectorCache.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsVectorType.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsVector.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4PhysicsOrderedFreeVector.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4MaterialPropertiesTable.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4IonisParamMat.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4SandiaTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4OrderedTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4DataVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4DataVector.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4ElementVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/materials/include/G4MaterialTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Track.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Step.hh \
+ /usr/include/c++/4.8/iomanip \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4StepPoint.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4SteppingControl.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4StepStatus.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4StepPoint.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4TrackVector.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Step.icc \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Track.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/track/include/G4Step.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/graphics_reps/include/G4AttDefStore.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/graphics_reps/include/G4AttDef.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/graphics_reps/include/G4TypeKey.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/graphics_reps/include/G4AttValue.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4UnitsTable.hh \
+ /home/vince/GEANT/Geant496/geant4.9.6.p04/source/global/management/include/G4UnitsTable.icc

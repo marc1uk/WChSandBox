@@ -63,6 +63,7 @@
 #include "SBsimMRDDB.hh"
 // **********/SciBooNE integration
 void ConstructMRD(G4LogicalVolume* expHall_log, G4double mrdZoffset);
+void ConstructNCV(G4LogicalVolume* waterTank_log);
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -113,7 +114,8 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
 */
 
   G4bool isWater = true;
-  G4bool WCAddGd = true;
+  G4bool WCAddGd = false;
+  G4bool isNCV = true; // Construct the Neutron Capture Volume
 
   //Decide if adding Gd
   G4String Scintillator = "Scintillator";
@@ -241,8 +243,17 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-	
-
+  if (isNCV){
+    G4ThreeVector NCVposition;
+    NCVposition.setX(0.*m); // Position of the NCV
+    NCVposition.setY(0.*m);
+    NCVposition.setZ(0.*m);
+    ConstructNCV(waterTank_log);
+    G4cout << "************ Neutron Capture Volume will be included in the simulation ! ************\n";
+  } else{
+    G4cout << "************ Neutron Capture Volume will not be included in the simulation ! ************\n";
+  }
+  
   ConstructMRD(expHall_log, tankouterRadius);			// marcus' MRD construction
   expHall_log->SetVisAttributes (G4VisAttributes::Invisible);	// set hall volume invisible
   
@@ -254,6 +265,119 @@ G4VPhysicalVolume* WCLiteDetectorConstruction::Construct()
   //always return the physical World
   return expHall_phys;
 
+}
+
+
+void ConstructNCV(G4LogicalVolume* waterTank_log){
+  //===============================================================================================================
+  //NEUTRON CAPTURE VOLUME DEFINITION
+  //===============================================================================================================
+  // NCV is defined as two cylinders, one filled with liquid, the other with acrylic. Two 'caps' are added to the top of the NCV as well. 
+  // The metal structure will been added as well (from pictures) since it will induce n-Fe captures
+  //===============================================================================================================
+
+  // Dimensions 
+  G4double NCVliquid_radius = 25.*cm;
+  G4double NCVliquid_height = 50.*cm;
+  G4double NCVvessel_thickness = 1.*cm;
+  G4double NCVvesselcap_thickness = 3.*cm;
+  
+  // NCV acrylic vessel
+  // Cylinder
+  G4VSolid* NCVvessel_tub
+    = new G4Tubs("NCVvessel_tub",
+		    0.,
+		    NCVliquid_radius + NCVvessel_thickness, // r1, r2
+		    NCVliquid_height/2., //Half height of the cylinder
+		    0.0, 2.0*M_PI         // phi0, delta_phi
+		    );
+
+  G4LogicalVolume* NCVvessel_log
+    = new G4LogicalVolume(NCVvessel_tub,
+			  G4Material::GetMaterial("Acrylic"),
+			  "NCVvessel_log",
+			  0,
+			  0,
+			  0);
+  G4VisAttributes* NCVvessel_vis
+    = new G4VisAttributes(G4Color(0.1,0.,1.0,0));
+  NCVvessel_log -> SetVisAttributes(NCVvessel_vis);
+
+
+  G4VPhysicalVolume* NCVvessel_phys
+  = new G4PVPlacement(0,  // no rotation
+			G4ThreeVector(0.,0.,0.), // shifted in the water tank
+			NCVvessel_log,
+			"NCVvessel_phys",
+			waterTank_log,          // mother
+			false,
+			0);
+  
+  // Caps
+  G4VSolid* NCVvesselcap_box
+    = new G4Box("NCVvesselcap_box",
+		    NCVliquid_radius, // x
+		    NCVliquid_radius, // y
+		    NCVvesselcap_thickness/2. // thickness
+		    );
+    G4LogicalVolume* NCVvesselcap_log
+    = new G4LogicalVolume(NCVvesselcap_box,
+			  G4Material::GetMaterial("Acrylic"),
+			  "NCVvesselcap_log",
+			  0,
+			  0,
+			  0);
+  G4VisAttributes* NCVvesselcap_vis
+    = new G4VisAttributes(G4Color(0.1,0.,1.0,0));
+  NCVvesselcap_log -> SetVisAttributes(NCVvesselcap_vis);
+
+  G4VPhysicalVolume* NCVvesselcap1_phys
+  = new G4PVPlacement(0,  // no rotation
+			G4ThreeVector(0.,0.,NCVliquid_height/2. + NCVvesselcap_thickness/2.), // top of the cylinder
+			NCVvesselcap_log,
+			"NCVvesselcap1_phys",
+			waterTank_log,          // mother
+			false,
+			0);
+  
+  G4VPhysicalVolume* NCVvesselcap2_phys
+  = new G4PVPlacement(0,  // no rotation
+			G4ThreeVector(0.,0., - NCVliquid_height/2. - NCVvesselcap_thickness/2.), // bottom of the cylinder
+			NCVvesselcap_log,
+			"NCVvesselcap2_phys",
+			waterTank_log,          // mother
+			false,
+			0);
+    
+  
+  // NCV liquid volume
+     G4VSolid* NCVliquid_tub
+      = new G4Tubs("NCVliquid_tub", //name
+  		     0., // tube radius
+  		     NCVliquid_radius, // r1, r2
+		     NCVliquid_height/2., //Half height of the cylinder
+  		     0.0, 2.0*M_PI         // phi0, delta_phi
+  		     );
+
+    G4LogicalVolume* NCVliquid_log
+      = new G4LogicalVolume(NCVliquid_tub,
+  			    G4Material::GetMaterial("NCVliquid"),
+  			    "NCVliquid_log",
+  			    0,
+  			    0,
+  			    0);
+    G4VisAttributes* NCVliquid_vis
+      = new G4VisAttributes(G4Color(0.1,1.0,0.,0));
+    NCVliquid_log -> SetVisAttributes(NCVliquid_vis);
+  
+    G4VPhysicalVolume* NCVliquid_phys
+     = new G4PVPlacement(0,  // no rotation
+  			  G4ThreeVector(), // centered in the vessel
+  			  NCVliquid_log,
+			  "NCVliquid_phys",
+  			  NCVvessel_log,          // mother
+  			  false,
+  			  0);
 }
 
 // ********************************************SciBooNE integration
