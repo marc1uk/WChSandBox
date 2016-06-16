@@ -1,0 +1,26 @@
+/run/verbose 0
+/event/verbose 0
+/process/verbose 0
+/tracking/verbose 1
+
+/run/initialize
+
+
+#(In)Activation of some processes
+
+#/process/inactivate Cerenkov
+#/process/inactivate NeutronDiffusionAndCapture
+#/process/inactivate DeferTrackProc all
+#/process/activate DeferTrackProc gamma
+#/process/activate DeferTrackProc e+
+#/process/activate DeferTrackProc e-
+
+
+#Shoot the gammas of the Pr isotropically from the cerium source
+/mygen/generator normal
+/gun/particle geantino
+/gun/position 0 0 0 mm
+/gun/momentum 0 -1 0
+/gun/momentumAmp 10 MeV
+
+/run/beamOn 1
