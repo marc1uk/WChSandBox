@@ -405,7 +405,7 @@ void WCLiteDetectorConstruction::ConstructMaterials()
   G4double RINDEX1[NUMENTRIES] =
     { 1.3435, 1.344,  1.3445, 1.345,  1.3455,
       1.346,  1.3465, 1.347,  1.3475, 1.348,
-      1.3485, 1.3492, 1.35,   1.3505, 1.351,
+      1.3485, 1.49, 1.35,   1.3505, 1.351,
       1.3518, 1.3522, 1.3530, 1.3535, 1.354,
       1.3545, 1.355,  1.3555, 1.356,  1.3568,
       1.3572, 1.358,  1.3585, 1.359,  1.3595,
@@ -770,7 +770,6 @@ void WCLiteDetectorConstruction::ConstructMaterials()
 
 
  // DEFINE SCINTILLATOR MATERIAL PROPERTY
-
    const G4int NumEntries = 60;
    
    G4double Scint_Energy[NumEntries] = {2.65086E-9*GeV,2.70739E-9*GeV,2.76153E-9*GeV,2.80895E-9*GeV,2.81081E-9*GeV,2.84367E-9*GeV,2.86017E-9*GeV,2.8767E-9*GeV,2.8942E-9*GeV,2.89602E-9*GeV,2.91479E-9*GeV,2.94447E-9*GeV,2.95178E-9*GeV,2.95449E-9*GeV,2.96948E-9*GeV,2.98294E-9*GeV,2.99728E-9*GeV,3.00297E-9*GeV,3.01188E-9*GeV,3.01761E-9*GeV,3.02239E-9*GeV,3.06615E-9*GeV,3.07136E-9*GeV,3.07403E-9*GeV,3.07766E-9*GeV,3.08913E-9*GeV,3.09219E-9*GeV,3.1048E-9*GeV,3.14546E-9*GeV,3.15049E-9*GeV,3.17008E-9*GeV,3.17567E-9*GeV,3.19696E-9*GeV,3.20206E-9*GeV,3.20943E-9*GeV,3.21148E-9*GeV,3.21352E-9*GeV,3.2208E-9*GeV,3.2318E-9*GeV,3.23576E-9*GeV,3.24292E-9*GeV,3.25304E-9*GeV,3.28128E-9*GeV,3.28671E-9*GeV,3.2919E-9*GeV,3.29532E-9*GeV,3.30592E-9*GeV,3.31226E-9*GeV,3.31979E-9*GeV,3.32572E-9*GeV,3.3332E-9*GeV,3.33545E-9*GeV,3.3435E-9*GeV,3.36639E-9*GeV,3.41137E-9*GeV,3.41482E-9*GeV,3.45157E-9*GeV,3.45439E-9*GeV,3.46271E-9*GeV,4.66655E-9*GeV};
@@ -807,6 +806,47 @@ void WCLiteDetectorConstruction::ConstructMaterials()
    
    Scintillator->SetMaterialPropertiesTable(myMPT7);
    Scintillator->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
+   
+   
+   // DEFINE NCV liquid properties (from discussion with Eljen)
+   
+   const G4int NumEntriesNCV = 35;
+   // Energy table
+    G4double ScintNCV_Energy[NumEntriesNCV] = {1.2398E-6/380*GeV,1.2398E-6/385*GeV,1.2398E-6/390*GeV,1.2398E-6/395*GeV,1.2398E-6/400*GeV,1.2398E-6/405*GeV,1.2398E-6/410*GeV,1.2398E-6/415*GeV,1.2398E-6/420*GeV,1.2398E-6/425*GeV,1.2398E-6/430*GeV,1.2398E-6/435*GeV,1.2398E-6/440*GeV,1.2398E-6/445*GeV,1.2398E-6/450*GeV,1.2398E-6/455*GeV,1.2398E-6/460*GeV,1.2398E-6/465*GeV,1.2398E-6/470*GeV,1.2398E-6/475*GeV,1.2398E-6/480*GeV,1.2398E-6/485*GeV,1.2398E-6/490*GeV,1.2398E-6/495*GeV,1.2398E-6/500*GeV,1.2398E-6/505*GeV,1.2398E-6/510*GeV,1.2398E-6/515*GeV,1.2398E-6/520*GeV,1.2398E-6/525*GeV,1.2398E-6/530*GeV,1.2398E-6/535*GeV,1.2398E-6/540*GeV,1.2398E-6/545*GeV,1.2398E-6/550*GeV};
+    
+   // Reflexion index
+   G4double RI_ScintNCV[NumEntriesNCV] =  {1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49,1.49};
+   
+   // Emission spectrum
+   G4double ScintNCV_WB_LS[NumEntriesNCV] = {0.000,0.105,0.410,0.820,0.990,0.950,0.820,0.810,0.920,0.940,0.880,0.750,0.610,0.550,0.510,0.485,0.435,0.270,0.210,0.175,0.150,0.130,0.111,0.096,0.083,0.070,0.060,0.050,0.043,0.038,0.030,0.025,0.020,0.015,0.010};
+   
+   
+   G4MaterialPropertiesTable* myMPT8 = new G4MaterialPropertiesTable();
+ 
+
+   myMPT8->AddProperty("RINDEX", ENERGY_water, RINDEX1, NUMENTRIES_water);
+   myMPT8->AddProperty("ABSLENGTH",ENERGY_water, ABSORPTION_water, NUMENTRIES_water);
+   myMPT8->AddProperty("RAYLEIGH",ENERGY_water,RAYLEIGH_water,NUMENTRIES_water);
+   /*
+   myMPT8->AddProperty("RINDEX",Scint_Energy, RI_Scint,NumEntries);
+   myMPT8->AddProperty("ABSLENGTH",ENERGY_water, ABSORPTION_water, NUMENTRIES_water);
+   myMPT8->AddProperty("RAYLEIGH",ENERGY_water,RAYLEIGH_water,NUMENTRIES_water);
+   */
+   myMPT8->AddProperty("FASTCOMPONENT",ScintNCV_Energy, ScintNCV_WB_LS,NumEntries);
+   myMPT8->AddProperty("SLOWCOMPONENT",ScintNCV_Energy, ScintNCV_WB_LS,NumEntries);
+   //myMPT8->AddProperty("MIEHG",ENERGY_water,MIE_water,NUMENTRIES_water);
+   //myMPT8->AddConstProperty("MIEHG_FORWARD",MIE_water_const[0]);
+   //myMPT8->AddConstProperty("MIEHG_BACKWARD",MIE_water_const[1]);
+   //myMPT8->AddConstProperty("MIEHG_FORWARD_RATIO",MIE_water_const[2]);
+   
+   myMPT8->AddConstProperty("SCINTILLATIONYIELD",9570./MeV); // EJ335 is 55% of anthracene (which is 17400 per MeV)
+   myMPT8->AddConstProperty("RESOLUTIONSCALE",.01);
+   myMPT8->AddConstProperty("FASTTIMECONSTANT", 1.23*ns);
+   myMPT8->AddConstProperty("SLOWTIMECONSTANT",9.26*ns);
+   myMPT8->AddConstProperty("YIELDRATIO",1.0);
+   
+   NCVliquid->SetMaterialPropertiesTable(myMPT8);
+   NCVliquid->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
    
 
 
