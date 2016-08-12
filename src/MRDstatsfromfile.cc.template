@@ -1,0 +1,28 @@
+//////////////////////////////////////////////
+void SBsimMRDDB::SetAlignmentInfo(char* fname)
+//////////////////////////////////////////////
+{
+  cout << fname << endl;
+  ifstream ifs(fname);
+  if ( ifs.fail() ) {
+    cerr << "SBsimMRDDB::SetAlignmentInfo: file open error!" << endl;
+    exit(-1);
+  }
+
+  char buf[256];
+  int layer=0;
+
+  while ( !ifs.eof() ) {
+    ifs.getline(buf,256);
+    if (buf[0]!='#') {
+      istringstream iss(buf);
+      iss >> layer;
+      iss >> pos.PlanePosition[layer][0]
+          >> pos.PlanePosition[layer][1]
+          >> pos.PlanePosition[layer][2]
+          >> pos.PlaneRotation[layer][0]
+          >> pos.PlaneRotation[layer][1]
+          >> pos.PlaneRotation[layer][2];
+    }
+  }
+}

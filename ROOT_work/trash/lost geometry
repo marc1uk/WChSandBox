@@ -1,0 +1,31 @@
+Hi all,<br>
+I'm having some difficulty finding with memory leaks in my application, so have run a valgrind leak check on one event to see what might be causing it.<br>
+While I'm pretty sure this is due to problems in my user event actions or trajectories, valgrind has picked up on quite a few other sources.<br>
+<br>
+A couple of these are shown below:<br>
+<br><code>
+==27144== 104 bytes in 1 blocks are definitely lost in loss record 28,915 of 37,694
+==27144==    at 0x4C29180: operator new(unsigned long) (vg_replace_malloc.c:324)
+==27144==    by 0xEF1EFD5: G4LogicalVolume::SetVisAttributes(G4VisAttributes const&) (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4geometry.so)
+==27144==    by 0x95D1EEA: ConstructMRD(G4LogicalVolume*, double) (WCLiteDetectorConstruction.cc:300)
+==27144==    by 0x95D2F34: WCLiteDetectorConstruction::Construct() (WCLiteDetectorConstruction.cc:243)
+==27144==    by 0xC7B5A18: G4RunManager::InitializeGeometry() (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4run.so)
+==27144==    by 0xC7B5AE0: G4RunManager::Initialize() (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4run.so)
+==27144==    by 0x403FDA: main (WChSandBox.cc:121)
+==27144== 
+==27144== 104 bytes in 1 blocks are definitely lost in loss record 28,916 of 37,694
+==27144==    at 0x4C29180: operator new(unsigned long) (vg_replace_malloc.c:324)
+==27144==    by 0xEF1EFD5: G4LogicalVolume::SetVisAttributes(G4VisAttributes const&) (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4geometry.so)
+==27144==    by 0x95D1F91: ConstructMRD(G4LogicalVolume*, double) (WCLiteDetectorConstruction.cc:314)
+==27144==    by 0x95D2F34: WCLiteDetectorConstruction::Construct() (WCLiteDetectorConstruction.cc:243)
+==27144==    by 0xC7B5A18: G4RunManager::InitializeGeometry() (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4run.so)
+==27144==    by 0xC7B5AE0: G4RunManager::Initialize() (in /home/marc/LinuxSystemFiles/GEANT4/geant4-9.04.p04/install/lib/geant4/Linux-g++/libG4run.so)
+==27144==    by 0x403FDA: main (WChSandBox.cc:121)</code><br>
+<br>
+The relevant line of WCLiteDetectorConstruction.cc:300 is:<br>
+<code>	generic_log->SetVisAttributes (G4VisAttributes::Invisible);	// make logical volume invisible </code><br>
+<br>
+
+
+
+

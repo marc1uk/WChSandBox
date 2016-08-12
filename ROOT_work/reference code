@@ -1,0 +1,132 @@
+TNtuple* pexodata = new TNtuple("exo_data","Data from exo file","x:y:z:n");
+TNtuple* pexodata = (TNtuple*)prfile->Get("exo_data"); //open data ntuple
+if (pexodata==NULL){
+	cout<<"Error loading data ntuple"<<endl;
+	return;
+}//check ntuple is valid
+cout<<"Opened file and data"<<endl;
+
+datalines = pexodata->ReadFile(infile, "x:y:z:n"); 
+Int_t numentries = pexodata->GetEntries();
+Float_t x=0,y=0,z=0,n=0;
+Float_t formval=0;
+
+for (Int_t i =0;i<numentries+1;i++){
+	pexodata->GetEntry(i);
+	
+	pexodata->SetBranchAddress("x",&x);
+	pexodata->SetBranchAddress("y",&y);
+	pexodata->SetBranchAddress("z",&z);
+	pexodata->SetBranchAddress("n",&n);
+
+TCanvas* aCanvas = new TCanvas("aCanvas","Title");
+
+	
+TH1F* phisto0 = new TH1F("manformula2","Fit combination formula manual",100,-5000.,35000.);
+c1->GetListOfPrimitives()->ls()
+Extract profile:			TProfile* myprof = (TProfile*)c1->GetPrimitive("htemp")	
+	
+TTree* pfitanalysis = new TTree("fitanalysis","Profile Fit Parameters");
+//define a new tree in the file to save the fit parameter arrays
+pnvsxprof->Fit("pol2"); //fit a 2nd order poly to TProfile pevsxprof
+//option 'N' will not draw graphics - different option than Draw() method! BUT you can't then get the fit function!!
+TF1* pnvsxfit = (TF1*)pnvsxprof->GetFunction("pol2"); //get pointer to the fit function
+//define arrays to store fit parameters
+Double_t* nvsxfitpars = new Double_t[2];
+//create a branch on the file tree to store the array
+pfitanalysis->Branch("nvsxfitpars",nvsxfitpars,"nvsxfitpars[2]/D"); 
+//get fit function parameters and put them in the input array evsxfitpars
+pnvsxfit->GetParameters(nvsxfitpars); 
+	
+mrdtree->Draw("mrdhit_particleID")
+mrdtree->Draw("mrdhit_process")
+mrdtree->Draw("mrdhit_z")
+mrdtree->Draw("mrdhit_edep")
+mrdtree->Draw("mrdhit_edep:mrdhit_process","","box")
+mrdtree->Draw("mrdhit_edep:mrdhit_particleID","","box")
+mrdtree->Draw("mrdhit_edep:mrdhit_z","","box")
+mrdtree->Draw("mrdhit_x:mrdhit_y","","box")
+mrdtree->Draw("mrdhit_z:mrdhit_copynum","","box")
+
+TFile all = TFile("FullEvent.root")
+TBrowser bro
+TTree* myt = (TTree*)all->Get("EventTree")
+myt->Draw("npart","part_pid==2112 && part_processEnd==0")
+myt->Draw("part_trackid","part_pid==2112 && part_processEnd==0")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==2112")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid=2112")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==2112")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==2112","spot")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==2112","text")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==2112","box")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==100")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==11")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==13")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==13","box")
+myt->Draw("phot_xEnd:phot_yEnd:phot_zEnd")
+myt->Draw("part_xEnd:part_yEnd:part_zEnd","part_pid==11")
+
+
+
+
+
+
+TBranch* hitnumsb = mrdtree->GetBranch("hitnum")
+
+
+Int_t datalines = 0;
+
+TNtuple* pexodata = new TNtuple("exo_data","Data from exo file","x:y:z:n");
+
+TH1F* pzdist1D = new TH1F("zdist1D","z distribution:z bin:number", 100, -10., 10.);
+//name, title:x-axis label:y-axis label, num bins, min, max 
+
+TH2F* pyvsx2D = new TH2F("yvsx2D","Y vs X distribution:x value:y value",100,-25,25,100,-25,25);
+//For 2D histo: ...title:num x bins,x-min,x-max,y bins,y-min,y-max)
+
+TH2F* pzvsx2D = new TH2F("zvsx2D","Z vs X distribution:x value:z value",100,-25,25,100,-10,10);
+
+TH2F* pzvsy2D = new TH2F("zvsy2D","Z vs Y distribution:y value:z value",100,-25,25,100,-10,10);
+
+TProfile* pnvsxprof = new TProfile("nvsxprof","Mean E vs X",100,-25,25);
+//TProfile inputs are basically the same as TH1. Profile is similar to projection..?
+
+TProfile* pnvsyprof = new TProfile("nvsyprof","Mean energy vs Y",100,-25,25);
+
+TH3F* pzvsyvsx = new TH3F("zvsyvsx","Z vs Y vs X 3D Plot",100,-25,25,100,-25,25,100,-10,10);
+
+TH3F* pnvsyvsx = new TH3F("nvsyvsx","Energy vs Y and X 3D",100,-25,25,100,-25,25,100,-500,2500);
+
+/*
+While(datafile.good()){
+//Read data file while there are lines to read
+	datalines = datalines++ //increment num lines read
+	datafile >> x >> y >> z >> n //read into working variables
+	pexodata->Fill(x,y,z,n); //put variables into ntuple
+	pzdist->Fill(z);
+
+*/
+
+//Alternate method
+//datalines = pexodata->ReadStream(datafileref);
+
+//Alternate 2: this is a method of TTree of which NTuple is a child. Actually ReadStream is also a method of TTree, reference guide seems to indicate it is a duplicate. 
+datalines = pexodata->ReadFile(infile, "x:y:z:n"); 
+//format specifier required unless it is the first line of the file
+
+pexodata->Draw("z >> zdist1D","","goff"); //USE HISTOGRAM NAME, NOT POINTER NAME; 
+pexodata->Draw("y:x >> yvsx2D","","goff");// zdist1D NOT pzdist1D!
+pexodata->Draw("z:x >> zvsx2D","","goff");
+pexodata->Draw("z:y >> zvsy2D","","goff"); 
+//pexodata->Project("nvsxprof", "n:x"); // DOES NOT WORK ???
+//evsxprof is name of histogram(? not profile?) object, "n:x" should be an...array? When does projection happen/ 
+//pexodata->Draw("n:x >> nvsxprof2");   // DOES NOT WORK
+//should create profile since pevsxprof is already a defined TProfile??
+pexodata->Draw("n:x >> nvsxprof", "", "prof goff"); // << USE THIS
+//option 'prof' creates a profile histogram instead of a scatter plot. 
+pexodata->Draw("n:y >> nvsyprof", "", "prof goff"); 
+pexodata->Draw("z:y:x >> zvsyvsx","","goff");
+pexodata->Draw("n:y:x >> nvsyvsx","","goff");
+
+cout << "Read " << datalines << " lines." << endl;

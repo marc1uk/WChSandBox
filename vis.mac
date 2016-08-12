@@ -1,0 +1,37 @@
+/vis/open OGL 800x800-0+0
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 70 20
+#/vis/viewer/set/viewpointThetaPhi 0 0
+#/vis/viewer/panTo -1 0
+/vis/viewer/zoom 1.5
+
+#for use with rob hatcher's geometry
+#/vis/viewer/set/viewpointVector -0.5 0.2 -0.5
+#/vis/viewer/zoom 4
+#/vis/viewer/pan 3 8	#/vis/viewer/pan 1.43 4.33
+
+#/vis/scene/add/axes 0 0 0 5 m
+/vis/scene/add/scale 2 m x 1 0 0 manual 1 0 0 m
+/vis/scene/add/scale 2 m y 0 1 0 manual 0 1 0 m 
+/vis/scene/add/scale 2 m z 0 0 1 manual 0 0 1 m
+#/vis/viewer/set/defaultTextColour 1 1 1	should be default, can give argument "white", use ! to unchange values but set further parameters
+/vis/scene/add/text 1 -0.2 0 m 16 0 0 x		# red
+/vis/scene/add/text 0 0.8 -0.1 m 16 0 0 y	# green
+/vis/scene/add/text 0 -0.2 1 m 16 0 0 z		# blue
+#text [x] [y] [z] [unit] [font_size] [x_offset] [y_offset] [text]
+/vis/scene/add/hits
+/vis/scene/add/trajectories smooth
+/vis/filtering/trajectories/create/particleFilter
+/vis/filtering/trajectories/particleFilter-0/add opticalphoton
+/vis/filtering/trajectories/particleFilter-0/invert true
+/vis/filtering/trajectories/mode hard
+#/vis/filtering/trajectories/create/originVolumeFilter
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDscints
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDsteels
+#/vis/filtering/trajectories/originVolumeFilter-0/add MRDalus
+#/vis/filtering/trajectories/originVolumeFilter-0/verbose false
+
+
+#/vis/scene/endOfEventAction accumulate
+
+
