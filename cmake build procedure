@@ -1,0 +1,8 @@
+cd build/
+source ~/LinuxSystemFiles/GEANT4/geant4-10.02/install/bin/geant4.sh
+source ~/LinuxSystemFiles/ROOT/root-6.04.14/build/bin/thisroot.sh
+cmake -DGeant4_DIR=/home/marc/LinuxSystemFiles/GEANT4/geant4-10.02/install/lib/Geant4-10.2.0 ../WChSandBox_v1
+make -j2 VERBOSE=1
+
+
+valgrind --tool=memcheck --suppressions=$ROOTSYS/../sauce/etc/valgrind-root.supp --leak-check=full --log-file="valgrindout.out" -v ./wchsandbox

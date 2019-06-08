@@ -1,0 +1,496 @@
+// ====================================================================
+//   DefineMRD.icc
+//
+//   2006/11/01 K. Hiraide
+// ====================================================================
+  #include "WCLiteDetectorConstruction.hh"
+  // MRDCard * mrdcard = InputCard->GetMRDCard(); << skipping by marcus; replaced below for simplicity
+  // READ MRD CARD
+	// Active light guide
+	G4int MRDLGON=1;
+	// Scale factor for MRD iron thickness
+	G4double IRONTHICKSCALE=1.0;
+	// END OF MRD CARD READ
+
+	// marcus: added:	
+  mrddb = new SBsimMRDDB();
+  // /marcus
+
+  G4ThreeVector xyz;
+  G4double xpos,ypos,zpos;
+  G4double dx,dy,dz,dx1,dx2,dy1,dy2,dt;
+  G4double center_x,center_y,center_z;
+
+  MRDModule*   mrdmod = mrddb->GetMRDModuleInfo();
+  MRDPosition* mrdpos = mrddb->GetMRDPositionInfo();
+  G4double iron_thickness[12];
+  for (G4int iLayer = 0; iLayer < 12; iLayer ++)
+    //iron_thickness[iLayer]= mrdmod->IronSizeZ[iLayer] * mrdcard->IronThickScale * INCH;
+    iron_thickness[iLayer] =  mrdmod->IronSizeZ[iLayer] * IRONTHICKSCALE * INCH;
+
+  // MRD iron plate
+  for (G4int iLayer = 0; iLayer < mrdmod->NLayer; iLayer ++){
+    dx = mrdmod->IronSizeXY[0]*cm;
+    dy = mrdmod->IronSizeXY[1]*cm;
+    dz = iron_thickness[iLayer];
+    MRDIron_Solid[iLayer] = new G4Box("MRDIron", dx, dy, dz);
+    MRDIron_LV[iLayer] = new G4LogicalVolume(MRDIron_Solid[iLayer], MRDIron, "MRDIron_LV");
+  }
+
+  // MRD vertical scintillator
+  dx = mrdmod->VScintiSize[0]*cm;
+  dy = mrdmod->VScintiSize[1]*cm;
+  dz = mrdmod->VScintiSize[2]*cm;
+  MRDVScinti_Solid = new G4Box("MRDVScinti", dx, dy, dz);
+  MRDVScinti_LV = new G4LogicalVolume(MRDVScinti_Solid, Scinti, "MRDVScinti_LV");
+
+  // MRD horizontal scintillator
+  dx = mrdmod->HScintiSize[0]*cm;
+  dy = mrdmod->HScintiSize[1]*cm;
+  dz = mrdmod->HScintiSize[2]*cm;
+  MRDHScinti_Solid = new G4Box("MRDHScinti", dx, dy, dz);
+  MRDHScinti_LV = new G4LogicalVolume(MRDHScinti_Solid, Scinti, "MRDHScinti_LV");
+
+  // MRD taper scintillator
+  dx1 = mrdmod->TScintiSize[0]*cm;
+  dx2 = mrdmod->TScintiSize[1]*cm;
+  dy1 = mrdmod->TScintiSize[2]*cm;
+  dy2 = mrdmod->TScintiSize[3]*cm;
+  dz  = mrdmod->TScintiSize[4]*cm;
+  MRDTScinti_Solid = new G4Trd("MRDTScinti", dx1, dx2, dy1, dy2, dz);
+  MRDTScinti_LV = new G4LogicalVolume(MRDTScinti_Solid, Scinti, "MRDTScinti_LV");
+
+  // MRD light guide
+  dx1 = mrdmod->LGSize[0]*cm;
+  dx2 = mrdmod->LGSize[1]*cm;
+  dy1 = mrdmod->LGSize[2]*cm;
+  dy2 = mrdmod->LGSize[3]*cm;
+  dz  = mrdmod->LGSize[4]*cm;
+  MRDLG_Solid = new G4Trd("MRDLG", dx1, dx2, dy1, dy2, dz);
+  MRDLG_LV = new G4LogicalVolume(MRDLG_Solid, Scinti, "MRDLG_LV");
+
+  // MRD Al support
+  dx = mrdmod->AlSizeV1[3]*INCH;
+  dy = mrdmod->AlSizeV1[0]*INCH;
+  dt = mrdmod->AlSizeV1[2]*INCH;
+  dz = mrdmod->AlSizeV1[1]*INCH;
+  MRDAlV1_Outer = new G4Box("MRDAlV1_Outer", dx, dy, dz);
+  MRDAlV1_Inner = new G4Box("MRDAlV1_Inner", dx, dy-dt, dz-dt);
+  MRDAlV1_Solid = new G4SubtractionSolid("MRDAlV1_Solid",MRDAlV1_Outer,MRDAlV1_Inner) ;
+  MRDAlV1_LV = new G4LogicalVolume(MRDAlV1_Solid, Al, "MRDAlV1_LV") ;
+
+  dx = mrdmod->AlSizeV2[3]*INCH;
+  dy = mrdmod->AlSizeV2[0]*INCH;
+  dt = mrdmod->AlSizeV2[2]*INCH;
+  dz = mrdmod->AlSizeV2[1]*INCH;
+  MRDAlV2_Outer = new G4Box("MRDAlV2_Outer", dx, dy, dz);
+  MRDAlV2_Inner = new G4Box("MRDAlV2_Inner", dx, dy-dt, dz-dt);
+  MRDAlV2_Solid = new G4SubtractionSolid("MRDAlV2_Solid",MRDAlV2_Outer,MRDAlV2_Inner) ;
+  MRDAlV2_LV = new G4LogicalVolume(MRDAlV2_Solid, Al, "MRDAlV2_LV") ;
+
+  dx = mrdmod->AlSizeV3[0]*INCH;
+  dy = mrdmod->AlSizeV3[3]*INCH;
+  dt = mrdmod->AlSizeV3[2]*INCH;
+  dz = mrdmod->AlSizeV3[1]*INCH;
+  MRDAlV3_Outer = new G4Box("MRDAlV3_Outer", dx, dy, dz);
+  MRDAlV3_Inner = new G4Box("MRDAlV3_Inner", dx-dt, dy, dz-dt);
+  MRDAlV3_Solid = new G4SubtractionSolid("MRDAlV3_Solid",MRDAlV3_Outer,MRDAlV3_Inner) ;
+  MRDAlV3_LV = new G4LogicalVolume(MRDAlV3_Solid, Al, "MRDAlV3_LV") ;
+
+  dx = mrdmod->AlSizeV4[0]*INCH;
+  dy = mrdmod->AlSizeV4[3]*INCH;
+  dt = mrdmod->AlSizeV4[2]*INCH;
+  dz = mrdmod->AlSizeV4[1]*INCH;
+  MRDAlV4_Outer = new G4Box("MRDAlV4_Outer", dx, dy, dz);
+  MRDAlV4_Inner = new G4Box("MRDAlV4_Inner", dx-dt, dy, dz-dt);
+  MRDAlV4_Solid = new G4SubtractionSolid("MRDAlV4_Solid",MRDAlV4_Outer,MRDAlV4_Inner) ;
+  MRDAlV4_LV = new G4LogicalVolume(MRDAlV4_Solid, Al, "MRDAlV4_LV") ;
+
+  dx = mrdmod->AlSizeV5[0]*INCH;
+  dy = mrdmod->AlSizeV5[3]*INCH;
+  dt = mrdmod->AlSizeV5[2]*INCH;
+  dz = mrdmod->AlSizeV5[1]*INCH;
+  MRDAlV5_Outer = new G4Box("MRDAlV5_Outer", dx, dy, dz);
+  MRDAlV5_Inner = new G4Box("MRDAlV5_Inner", dx-dt, dy, dz-dt);
+  MRDAlV5_Solid = new G4SubtractionSolid("MRDAlV5_Solid",MRDAlV5_Outer,MRDAlV5_Inner) ;
+  MRDAlV5_LV = new G4LogicalVolume(MRDAlV5_Solid, Al, "MRDAlV5_LV") ;
+
+  dx = mrdmod->AlSizeH1[0]*INCH;
+  dy = mrdmod->AlSizeH1[3]*INCH;
+  dt = mrdmod->AlSizeH1[2]*INCH;
+  dz = mrdmod->AlSizeH1[1]*INCH;
+  MRDAlH1_Outer = new G4Box("MRDAlH1_Outer", dx, dy, dz);
+  MRDAlH1_Inner = new G4Box("MRDAlH1_Inner", dx-dt, dy, dz-dt);
+  MRDAlH1_Solid = new G4SubtractionSolid("MRDAlH1_Solid",MRDAlH1_Outer,MRDAlH1_Inner) ;
+  MRDAlH1_LV = new G4LogicalVolume(MRDAlH1_Solid, Al, "MRDAlH1_LV") ;
+
+  dx = mrdmod->AlSizeH2[3]*INCH;
+  dy = mrdmod->AlSizeH2[0]*INCH;
+  dt = mrdmod->AlSizeH2[2]*INCH;
+  dz = mrdmod->AlSizeH2[1]*INCH;
+  MRDAlH2_Outer = new G4Box("MRDAlH2_Outer", dx, dy, dz);
+  MRDAlH2_Inner = new G4Box("MRDAlH2_Inner", dx, dy-dt, dz-dt);
+  MRDAlH2_Solid = new G4SubtractionSolid("MRDAlH2_Solid",MRDAlH2_Outer,MRDAlH2_Inner) ;
+  MRDAlH2_LV = new G4LogicalVolume(MRDAlH2_Solid, Al, "MRDAlH2_LV") ;
+
+  dx = mrdmod->AlSizeH3[3]*INCH;
+  dy = mrdmod->AlSizeH3[0]*INCH;
+  dt = mrdmod->AlSizeH3[2]*INCH;
+  dz = mrdmod->AlSizeH3[1]*INCH;
+  MRDAlH3_Outer = new G4Box("MRDAlH3_Outer", dx, dy, dz);
+  MRDAlH3_Inner = new G4Box("MRDAlH3_Inner", dx, dy-dt, dz-dt);
+  MRDAlH3_Solid = new G4SubtractionSolid("MRDAlH3_Solid",MRDAlH3_Outer,MRDAlH3_Inner) ;
+  MRDAlH3_LV = new G4LogicalVolume(MRDAlH3_Solid, Al, "MRDAlH3_LV") ;
+
+// assembly AL support
+  MRDAlSupportV = new G4AssemblyVolume();
+  MRDAlSupportH = new G4AssemblyVolume();
+
+  G4RotationMatrix  Ra (0,0,0);
+  G4ThreeVector  Ta (0,0,0);
+
+Ta.set(0,47.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV1_LV, Ta,&Ra);
+Ta.set(0,-47.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV1_LV, Ta,&Ra);
+
+Ta.set(0,18.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV2_LV, Ta,&Ra);
+Ta.set(0,-18.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV2_LV, Ta,&Ra);
+
+Ta.set(18.*INCH,32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(18.*INCH,-32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(-18.*INCH,32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(-18.*INCH,-32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(54.*INCH,32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(54.*INCH,-32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(-54.*INCH,32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+Ta.set(-54.*INCH,-32.5*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV3_LV, Ta,&Ra);
+
+Ta.set(-54.*INCH,0,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV4_LV, Ta,&Ra);
+Ta.set(-18.*INCH,0,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV4_LV, Ta,&Ra);
+Ta.set(18.*INCH,0,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV4_LV, Ta,&Ra);
+Ta.set(54.*INCH,0,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV4_LV, Ta,&Ra);
+
+Ta.set(61.5*INCH,51.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV5_LV, Ta,&Ra);
+Ta.set(61.5*INCH,-51.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV5_LV, Ta,&Ra);
+Ta.set(-61.5*INCH,51.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV5_LV, Ta,&Ra);
+Ta.set(-61.5*INCH,-51.*INCH,0);
+MRDAlSupportV->AddPlacedVolume(MRDAlV5_LV, Ta,&Ra);
+
+// horizontal frame
+
+Ta.set(18.*INCH,0,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH1_LV, Ta,&Ra);
+Ta.set(-18.*INCH,0,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH1_LV, Ta,&Ra);
+Ta.set(54.*INCH,0,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH1_LV, Ta,&Ra);
+Ta.set(-54.*INCH,0,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH1_LV, Ta,&Ra);
+
+Ta.set(0,53.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH2_LV, Ta,&Ra);
+Ta.set(0,-53.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH2_LV, Ta,&Ra);
+
+Ta.set(0,18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+Ta.set(0,-18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+Ta.set(36*INCH,18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+Ta.set(36*INCH,-18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+Ta.set(-36*INCH,18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+Ta.set(-36*INCH,-18.*INCH,0);
+MRDAlSupportH->AddPlacedVolume(MRDAlH3_LV, Ta,&Ra);
+
+/*
+  // MRD veto scintillator
+  dx = mrdmod->VetoVSize[0]*cm;
+  dy = mrdmod->VetoVSize[1]*cm;
+  dz = mrdmod->VetoVSize[2]*cm;
+  MRDVetoVScinti_Solid = new G4Box("MRDVetoVScinti", dx, dy, dz);
+  MRDVetoVScinti_LV =
+    new G4LogicalVolume(MRDVetoVScinti_Solid, Scinti, "MRDVetoVScinti_LV");
+  
+  // MRD veto scintillator
+  dx = mrdmod->VetoHSize[0]*cm;
+  dy = mrdmod->VetoHSize[1]*cm;
+  dz = mrdmod->VetoHSize[2]*cm;
+  MRDVetoHScinti_Solid = new G4Box("MRDVetoHScinti", dx, dy, dz);
+  MRDVetoHScinti_LV =
+    new G4LogicalVolume(MRDVetoHScinti_Solid, Scinti, "MRDVetoHScinti_LV");
+  
+  // MRD veto scintillator (EndCap)
+  dx = mrdmod->VetoESize[0]*cm;
+  dy = mrdmod->VetoESize[1]*cm;
+  dz = mrdmod->VetoESize[2]*cm;
+  MRDVetoEScinti_Solid = new G4Box("MRDVetoEScinti", dx, dy, dz);
+  MRDVetoEScinti_LV =
+    new G4LogicalVolume(MRDVetoEScinti_Solid, Scinti, "MRDVetoEScinti_LV");
+*/
+
+  // ==============================================================
+  // assemble MRD
+  // ==============================================================
+  
+  // Physical Volumes - store in vectors so we can access them later to put ino optical surfaces (added by marcus)
+  // ================
+  std::vector<G4VPhysicalVolume*> paddles_phys;
+  std::vector<G4VPhysicalVolume*> tapers_phys;
+  std::vector<G4VPhysicalVolume*> lgs_phys;
+  G4VPhysicalVolume* paddle_phys;
+  G4VPhysicalVolume* taper_phys;
+  G4VPhysicalVolume* lg_phys;
+  // ================
+
+  const G4double HSizeX = mrdmod->HScintiSize[0] +mrdmod->ScintiGap/2.;
+  const G4double HSizeY = mrdmod->HScintiSize[1] +mrdmod->ScintiGap/2.;
+  const G4double VSizeX = mrdmod->VScintiSize[0] +mrdmod->ScintiGap/2.;
+  const G4double VSizeY = mrdmod->VScintiSize[1] +mrdmod->ScintiGap/2.;
+
+  G4double Ang[2] = {-90*deg ,90*deg};
+  G4RotationMatrix  Rm (0,0,0);
+  G4ThreeVector  Tm (0,0,400*cm);
+  G4int layer = 0;
+  
+//  marcus: this commented out block is the removed layer
+//  Assemble first plane
+//  center_x = (mrdpos->PlanePosition[0][0]+mrdpos->GlobalPosition[0])*cm;
+//  center_y = (mrdpos->PlanePosition[0][1]+mrdpos->GlobalPosition[1])*cm;
+//  center_z = (mrdpos->PlanePosition[0][2]+mrdpos->GlobalPosition[2])*cm;
+
+//  xpos = center_x;
+//  ypos = center_y;
+//  zpos = center_z  - 0.75*INCH;
+
+//  Tm.set(xpos,ypos,zpos);
+//  MRDAlSupportH->MakeImprint(expHall->GetLogicalVolume(), Tm,&Rm);  //placement
+
+//  zpos = center_z +mrdmod->HScintiSize[2]*cm;
+
+//  for (G4int i=0; i<2; i++) {
+//    for (G4int j=0; j<13; j++) {
+//      // isci number
+//      G4int isci = (layer << 5 ) + (i << 4) + j;
+
+//      // plane center position
+
+//      // horizontal scintillator
+//      xpos = center_x +2*(i-0.5)*HSizeX*cm;
+//      ypos = center_y +2*(j-6)*HSizeY*cm;
+//      paddle_phys = new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDHScinti_PV", MRDHScinti_LV, expHall, false, isci); //placement
+
+//      // horizontal taper scintillator
+//      G4RotationMatrix* RotMatrix = new G4RotationMatrix(90*deg,Ang[i],0);
+
+//      xpos = center_x 
+//	      +2*(i-0.5)*(2*HSizeX -mrdmod->ScintiGap/2. +mrdmod->TScintiSize[4])*cm;
+//      ypos = center_y +2*(j-6)*HSizeY*cm;
+//      taper_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDTHScinti_PV", MRDTScinti_LV, expHall, false, isci); //placement
+
+//      // horizontal light guide
+//      xpos += 2*(i-0.5)*(mrdmod->TScintiSize[4] + mrdmod->LGSize[4])*cm;
+//      lg_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDLG_PV",	MRDLG_LV, expHall, false, isci); //placement
+//      
+//      paddles_phys.push_back(paddle_phys);
+//      tapers_phys.push_back(taper_phys);
+//      lgs_phys.push_back(lg_phys);
+//    }
+//  }
+
+  for (G4int layer=2; layer<mrdmod->NLayer+1; layer++) {	// from layer=1
+
+    // plane center position
+    center_x = (mrdpos->PlanePosition[layer][0]+mrdpos->GlobalPosition[0])*cm;
+    center_y = (mrdpos->PlanePosition[layer][1]+mrdpos->GlobalPosition[1])*cm;
+    center_z = (mrdpos->PlanePosition[layer][2]+mrdpos->GlobalPosition[2])*cm;
+
+    // Assemble iron plate
+    xpos = center_x;
+    ypos = center_y;
+    zpos = center_z - mrdmod->IronScintiGap * cm - iron_thickness[layer-1];
+    new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDIron_PV", MRDIron_LV[layer-1], expHall, false, layer); //placement
+
+    
+    if (layer % 2 ==0) {
+      xpos = center_x;
+      ypos = center_y;
+      zpos = center_z +2*mrdmod->HScintiSize[2]*cm + 0.75*INCH;
+
+      Tm.set(xpos,ypos,zpos);
+      MRDAlSupportH->MakeImprint(expHall->GetLogicalVolume(), Tm,&Rm); //placement
+
+      // horizontal scintillator plane
+      G4double Ang[2] = {-90*deg ,90*deg};
+      zpos = center_z + mrdmod->HScintiSize[2]*cm;
+      for (G4int i=0; i<2; i++) {
+        for (G4int j=0; j<13; j++) {
+          // isci number
+          G4int isci = (layer << 5 ) + (i << 4) + j;
+          
+          xpos = center_x +2*(i-0.5)*HSizeX*cm;
+          ypos = center_y +2*(j-6)*HSizeY*cm;
+          paddle_phys = new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDHScinti_PV", MRDHScinti_LV, expHall, false, isci); //placement
+          
+          G4RotationMatrix* RotMatrix = new G4RotationMatrix(90*deg,Ang[i],0);
+          xpos = center_x
+            +2*(i-0.5)*(2*HSizeX -mrdmod->ScintiGap/2 +mrdmod->TScintiSize[4])*cm;
+          ypos = center_y +2*(j-6)*HSizeY*cm;
+          taper_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDTHScinti_PV", MRDTScinti_LV, expHall, false, isci); //placement
+          // horizontal light guide
+          xpos += 2*(i-0.5)*(mrdmod->TScintiSize[4] + mrdmod->LGSize[4])*cm;
+          lg_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDLG_PV", MRDLG_LV, expHall, false, isci); //placement
+          
+          paddles_phys.push_back(paddle_phys);
+          tapers_phys.push_back(taper_phys);
+          lgs_phys.push_back(lg_phys);
+          
+        }
+      }
+    } else {
+      
+      xpos = center_x;
+      ypos = center_y;
+      zpos = center_z + 2*mrdmod->HScintiSize[2]*cm + 0.75*INCH;
+
+      Tm.set(xpos,ypos,zpos);
+      MRDAlSupportV->MakeImprint(expHall->GetLogicalVolume(), Tm,&Rm); //placement
+      
+      // vertical scintillator plane
+      G4double Ang[2] = {90*deg,-90*deg};
+      zpos = center_z + mrdmod->HScintiSize[2]*cm;
+      for (G4int i=0; i<2; i++) {
+        for (G4int j=0; j<15; j++) {
+	  // isci number
+          G4int isci = (layer << 5 ) + (i << 4) + j;
+          
+          xpos = center_x +2*(j-7)*VSizeX*cm;
+          ypos = center_y +2*(i-0.5)*VSizeY*cm;
+          paddle_phys = new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDVScinti_PV", MRDVScinti_LV, expHall, false, isci); //placement
+          
+          xpos = center_x +2*(j-7)*VSizeX*cm;
+          ypos = center_y
+            +2*(i-0.5)*(2*VSizeY -mrdmod->ScintiGap/2 +mrdmod->TScintiSize[4])*cm;
+          G4RotationMatrix* RotMatrix = new G4RotationMatrix(0,Ang[i],0);
+          taper_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDTVScinti_PV", MRDTScinti_LV, expHall, false, isci); //placement
+          // vertical light guide
+          ypos += 2*(i-0.5)*(mrdmod->TScintiSize[4] + mrdmod->LGSize[4])*cm;
+          lg_phys = new G4PVPlacement(RotMatrix, G4ThreeVector(xpos,ypos,zpos), "MRDLG_PV", MRDLG_LV, expHall, false, isci); //placement
+          
+          paddles_phys.push_back(paddle_phys);
+          tapers_phys.push_back(taper_phys);
+          lgs_phys.push_back(lg_phys);
+          
+        }
+      }
+    }
+  }
+
+
+/*
+  // Veto
+  layer = mrdmod->NLayer +1 ;
+  zpos  = (mrdpos->GlobalPosition[2] +mrdmod->VetoHSize[2])*cm;
+  G4int i;
+  for (G4int j=0; j<2; j++) {
+    i=0;
+
+    G4int isci = (layer << 5 ) + (i << 4) + j;
+    xpos = mrdpos->GlobalPosition[0]*cm;
+    ypos = (mrdpos->GlobalPosition[1]
+	    +(2*j-1)*(mrdmod->VetoVSize[1]+mrdmod->VetoHSize[1]))*cm;
+    new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDVetoHScinti_PV",
+		      MRDVetoHScinti_LV, expHall, false, isci);
+
+    i=1;
+    isci = (layer << 5 ) + (i << 4) + j;
+    xpos = (mrdpos->GlobalPosition[0]
+	    +(2*j-1)*(mrdmod->VetoHSize[0]+mrdmod->VetoVSize[0]))*cm;
+    ypos = mrdpos->GlobalPosition[1]*cm;
+    new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDVetoVScinti_PV",
+		      MRDVetoVScinti_LV, expHall, false, isci);
+  }
+
+  i=2;
+  xpos = mrdpos->GlobalPosition[0]*cm;
+  ypos = mrdpos->GlobalPosition[1]*cm;
+  zpos = (mrdpos->GlobalPosition[2] +2*mrdmod->VetoVSize[3] +mrdmod->LayerGap)*cm;
+  G4int isci = (layer << 5 ) + (i << 4) ;
+  new G4PVPlacement(0, G4ThreeVector(xpos,ypos,zpos), "MRDVetoEScinti_PV",
+		    MRDVetoEScinti_LV, expHall, false, isci);
+*/
+
+  // ==============================================================
+  // define detector visual attributes
+  // ==============================================================
+  G4VisAttributes* MRDIron_VisAtt = new G4VisAttributes(true, G4Colour(1., 0.8, 0.6));
+  for (int iLayer = 0; iLayer < mrdmod->NLayer ; iLayer ++)
+    MRDIron_LV[iLayer]-> SetVisAttributes(MRDIron_VisAtt);
+
+  G4VisAttributes* MRDScinti_VisAtt=
+  new G4VisAttributes(true, G4Colour(0.6, 1.0, 0.8));
+  G4VisAttributes* MRDLG_VisAtt =
+  new G4VisAttributes(true, G4Colour(0.5, 0.5, 0.5)); // gray
+
+  MRDHScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+  MRDVScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+  MRDTScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+  MRDLG_LV-> SetVisAttributes(MRDLG_VisAtt);
+  //MRDVetoVScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+  //MRDVetoHScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+  //MRDVetoEScinti_LV-> SetVisAttributes(MRDScinti_VisAtt);
+
+  // ==============================================================
+  // define detector sensitivity marcus: replaced with below
+  // ==============================================================
+/*
+  G4SDManager* SDman= G4SDManager::GetSDMpointer();
+  G4String SDname;
+  SBsimMRDSD* MRD_SD= new SBsimMRDSD( SDname="/MRD" );
+  SDman-> AddNewDetector( MRD_SD );
+  MRDVScinti_LV-> SetSensitiveDetector( MRD_SD );
+  MRDHScinti_LV-> SetSensitiveDetector( MRD_SD );
+  MRDTScinti_LV-> SetSensitiveDetector( MRD_SD );
+if (1 == MRDLGON)		//marcus: used to read from mrdcard; mrdcard->MRDLGON. 
+  MRDLG_LV-> SetSensitiveDetector( MRD_SD );
+  //MRDVetoVScinti_LV-> SetSensitiveDetector( MRD_SD );
+  //MRDVetoHScinti_LV-> SetSensitiveDetector( MRD_SD );
+  //MRDVetoEScinti_LV-> SetSensitiveDetector( MRD_SD );
+*/
+
+  // SD replacement with Marcus version
+  // ==================================
+  // Get pointer to detector manager
+  G4SDManager* SDman = G4SDManager::GetSDMpointer();
+  
+  // Create a new instance of MRD sensitive detector
+  G4VSensitiveDetector* mrdSD = new MRDSD("MuonRangeDetector"); 
+  // Register detector with manager
+  SDman->AddNewDetector(mrdSD);
+  // Attach detector to volume defining scintillator paddles
+  MRDVScinti_LV-> SetSensitiveDetector( mrdSD );
+  MRDHScinti_LV-> SetSensitiveDetector( mrdSD );
+  MRDTScinti_LV-> SetSensitiveDetector( mrdSD );
+  if (1 == MRDLGON) MRDLG_LV-> SetSensitiveDetector( mrdSD );
+  
+
