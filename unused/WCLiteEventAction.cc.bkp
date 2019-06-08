@@ -1,0 +1,711 @@
+//
+// ********************************************************************
+// * License and Disclaimer                                           *
+// *                                                                  *
+// * The  Geant4 software  is  copyright of the Copyright Holders  of *
+// * the Geant4 Collaboration.  It is provided  under  the terms  and *
+// * conditions of the Geant4 Software License,  included in the file *
+// * LICENSE and available at  http://cern.ch/geant4/license .  These *
+// * include a list of copyright holders.                             *
+// *                                                                  *
+// * Neither the authors of this software system, nor their employing *
+// * institutes,nor the agencies providing financial support for this *
+// * work  make  any representation or  warranty, express or implied, *
+// * regarding  this  software system or assume any liability for its *
+// * use.  Please see the license in the file  LICENSE  and URL above *
+// * for the full disclaimer and the limitation of liability.         *
+// *                                                                  *
+// * This  code  implementation is the result of  the  scientific and *
+// * technical work of the GEANT4 collaboration.                      *
+// * By using,  copying,  modifying or  distributing the software (or *
+// * any work based  on the software)  you  agree  to acknowledge its *
+// * use  in  resulting  scientific  publications,  and indicate your *
+// * acceptance of all terms of the Geant4 Software license.          *
+// ********************************************************************
+//
+//
+// $Id: WCLiteEventAction.cc,v 1.3 2006/06/29 17:54:20 gunter Exp $
+// GEANT4 tag $Name: geant4-09-01-patch-03 $
+//
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+
+#include "WCLiteEventAction.hh"
+#include "G4Event.hh"
+#include "G4EventManager.hh"
+#include "G4TrajectoryContainer.hh"
+#include "G4Trajectory.hh"
+#include "WCLiteTrajectory.hh"
+#include "WCLiteTrajectoryPoint.hh"
+#include "G4VVisManager.hh"
+#include "G4ios.hh"
+#include "TFile.h"
+#include "TString.h"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+WCLiteEventAction::WCLiteEventAction()
+{
+  eventcount=1;
+  totalcapturecount=-1;
+  totalmucount=-1;
+
+  evttree = new TTree("EventTree","EventTree");
+  
+  const int knphotmax=500000;
+  phot_xStart = new G4double[knphotmax];
+  phot_yStart = new G4double[knphotmax];
+  phot_zStart = new G4double[knphotmax];
+  phot_tStart = new G4double[knphotmax];
+  phot_xEnd = new G4double[knphotmax];
+  phot_yEnd = new G4double[knphotmax];
+  phot_zEnd = new G4double[knphotmax];
+  phot_tEnd = new G4double[knphotmax];
+  /*
+  phot_pxStart = new G4double[knphotmax];
+  phot_pyStart = new G4double[knphotmax];
+  phot_pyStart = new G4double[knphotmax];
+  phot_pxEnd = new G4double[knphotmax];
+  phot_pyEnd = new G4double[knphotmax];
+  phot_pyEnd = new G4double[knphotmax];
+  */
+  phot_wavelength = new G4double[knphotmax];
+  phot_processStart = new G4int[knphotmax];
+  phot_isScat = new G4int[knphotmax];
+  phot_parentid = new G4int[knphotmax];
+  phot_trackid = new G4int[knphotmax];
+  phot_hit = new G4int[knphotmax];
+
+  evttree->Branch("nphot",&nphot);
+  evttree->Branch("nevts",&eventcount);
+  evttree->Branch("ncaptures",&capturecount);
+
+  evttree->Branch("phot_xStart",phot_xStart,"phot_xStart[nphot]/D");
+  evttree->Branch("phot_yStart",phot_yStart,"phot_yStart[nphot]/D");
+  evttree->Branch("phot_zStart",phot_zStart,"phot_zStart[nphot]/D");
+  evttree->Branch("phot_tStart",phot_tStart,"phot_tStart[nphot]/D");
+  evttree->Branch("phot_xEnd",phot_xEnd,"phot_xEnd[nphot]/D");
+  evttree->Branch("phot_yEnd",phot_yEnd,"phot_yEnd[nphot]/D");
+  evttree->Branch("phot_zEnd",phot_zEnd,"phot_zEnd[nphot]/D");
+  evttree->Branch("phot_tEnd",phot_tEnd,"phot_tEnd[nphot]/D");
+  evttree->Branch("phot_wavelength",phot_wavelength,"phot_wavelength[nphot]/D");
+  evttree->Branch("phot_processStart",phot_processStart,"phot_processStart[nphot]/I");
+  evttree->Branch("phot_isScat",phot_isScat,"phot_isScat[nphot]/I");
+  evttree->Branch("phot_parentid",phot_parentid,"phot_parentid[nphot]/I");
+  evttree->Branch("phot_trackid",phot_trackid,"phot_trackid[nphot]/I");
+  evttree->Branch("phot_hit",phot_hit,"phot_hit[nphot]/I");
+
+  TString mtname;
+  mtname+="VerboseHits_Tree";
+
+  TString htname;
+  htname+="Hits_Tree";
+
+  TString ttname;
+  ttname+="Full_Events_Tree";
+
+  TString mulname;
+  mulname+="MuHits_Tree";
+
+  TString etname;
+  etname+="Events_Tree";
+
+  TString ctname;
+  ctname+="Capture_Tree";
+
+  TString gctname;
+  gctname+="Global_Capture_Tree";
+
+  nt = new TTree(mtname,mtname);
+  ht = new TTree(htname,htname);
+  trk = new TTree(ttname,ttname);
+  gtrk = new TTree (etname,etname);
+  mul = new TTree(mulname,mulname);
+  capt = new TTree(ctname,ctname); 
+  gcapt = new TTree(ctname,ctname); 
+
+
+  // start and end points of every particle
+  nt->Branch("nevent",&eventcount);
+  nt->Branch("pdgid",&partcode);
+  nt->Branch("x0",&xStart);
+  nt->Branch("y0",&yStart);
+  nt->Branch("z0",&zStart);
+  nt->Branch("t0",&tStart);
+  nt->Branch("xf",&xEnd);
+  nt->Branch("yf",&yEnd);
+  nt->Branch("zf",&zEnd);
+  nt->Branch("tf",&tEnd);
+  nt->Branch("Et0",&TEStart);
+  nt->Branch("E0",&KEStart);
+  nt->Branch("Etf",&TEEnd);
+  nt->Branch("Ef",&KEEnd);
+  nt->Branch("parentID",&parentid);
+  nt->Branch("trackID",&trackid);
+  nt->Branch("processEnd",&processEnd);
+  nt->Branch("processStart",&processStart);
+  nt->Branch("phhit",&phhit);
+  nt->Branch("wavelength",&wavelengthStart);
+  nt->Branch("isScatPhot",&isScatPhot);
+
+  //hits only
+  ht->Branch("x_hit",&xEnd);
+  ht->Branch("y_hit",&yEnd);
+  ht->Branch("z_hit",&zEnd);
+  ht->Branch("true_time",&tEnd);
+  ht->Branch("true_time_corrected",&tEnd);
+  ht->Branch("process",&processStart);
+  ht->Branch("eventID",&eventcount);
+  ht->Branch("photon_wavelength",&wavelengthStart);
+
+  ht->Branch("pdgid",&partcode);
+  ht->Branch("x0",&xStart);
+  ht->Branch("y0",&yStart);
+  ht->Branch("z0",&zStart);
+  ht->Branch("t0",&tStart);
+  ht->Branch("Et0",&TEStart);
+  ht->Branch("E0",&KEStart);
+  ht->Branch("Etf",&TEEnd);
+  ht->Branch("Ef",&KEEnd);
+  ht->Branch("parentID",&parentid);
+  ht->Branch("trackID",&trackid);
+  ht->Branch("isScatPhot",&isScatPhot);
+
+  
+  //full track information for non-photon particles
+  trk->Branch("eventID_ET",&eventcount);
+  trk->Branch("pdg",&partcode);
+  trk->Branch("pos_x",&xStep);
+  trk->Branch("pos_y",&yStep);
+  trk->Branch("pos_z",&zStep);
+  trk->Branch("dir_x1",&xStep);
+  trk->Branch("dir_y1",&yStep);
+  trk->Branch("dir_z1",&zStep);
+  trk->Branch("t",&tStep);
+  trk->Branch("istp",&iStep);
+  trk->Branch("Et",&TEStep);
+  trk->Branch("Ekin1",&KEStep);
+  trk->Branch("processStep",&processStep);
+  trk->Branch("parentID",&parentid);
+  trk->Branch("trackID",&trackid);
+  trk->Branch("processStart",&processStart);
+
+  //global track information for muon in the event
+  gtrk->Branch("eventID_ET",&totalmucount);
+  gtrk->Branch("pdg1",&mpartcode);
+  gtrk->Branch("pos_x",&mxStart);
+  gtrk->Branch("pos_y",&myStart);
+  gtrk->Branch("pos_z",&mzStart);
+  gtrk->Branch("dir_x1",&mxStartDir);
+  gtrk->Branch("dir_y1",&myStartDir);
+  gtrk->Branch("dir_z1",&mzStartDir);
+  gtrk->Branch("t",&mtStart);
+  gtrk->Branch("Et",&mTEStart);
+  gtrk->Branch("Ekin1",&mKEStart);
+  gtrk->Branch("processStep",&mprocessStart);
+  gtrk->Branch("parentID",&mparentid);
+  gtrk->Branch("trackID",&mtrackid);
+  gtrk->Branch("processStart",&mprocessStart);
+
+  // global stats from each capture
+  gcapt->Branch("pdg1",&partcode);
+  gcapt->Branch("ncapt",&capturecount);
+  gcapt->Branch("eventID_ET",&totalcapturecount);
+  gcapt->Branch("eventglobal",&eventcount);
+  gcapt->Branch("captureT0",&captT);
+  gcapt->Branch("pos_x",&captx);
+  gcapt->Branch("pos_y",&capty);
+  gcapt->Branch("pos_z",&captz);
+  gcapt->Branch("dir_x1",&captx);
+  gcapt->Branch("dir_y1",&capty);
+  gcapt->Branch("dir_z1",&captz);
+  gcapt->Branch("ngammas",&ncaptgammas);
+  gcapt->Branch("Ekin1",&captenergy);
+  gcapt->Branch("nphotspercapt",&nphotspercapt);
+
+  // photon hits from each event with a muon
+  mul->Branch("x_hit",&mhxEnd);
+  mul->Branch("y_hit",&mhyEnd);
+  mul->Branch("z_hit",&mhzEnd);
+  mul->Branch("true_time",&mhtEnd);
+  mul->Branch("true_time_corrected",&mhtEnd);
+  mul->Branch("process",&mhprocessStart);
+  mul->Branch("eventID",&totalmucount);
+  mul->Branch("eventglobal",&eventcount);
+  mul->Branch("photon_wavelength",&mhwavelength);
+
+
+  // photon hits from each individual neutron capture
+  capt->Branch("x_hit",&cxEnd);
+  capt->Branch("y_hit",&cyEnd);
+  capt->Branch("z_hit",&czEnd);
+  capt->Branch("true_time",&ctEnd);
+  capt->Branch("true_time_corrected",&ctEnd);
+  capt->Branch("process",&cprocessStart);
+  capt->Branch("eventID",&totalcapturecount);
+  capt->Branch("photon_wavelength",&cwavelengthStart);
+
+  capt->Branch("ncapt",&capturecount);
+  capt->Branch("eventglobal",&eventcount);
+  capt->Branch("captureT0",&captT);
+  capt->Branch("capturex",&captx);
+  capt->Branch("capturey",&capty);
+  capt->Branch("capturez",&captz);
+  capt->Branch("ngammas",&ncaptgammas);
+  capt->Branch("captureE",&captenergy);
+  capt->Branch("pdgid",&cpartcode);
+  capt->Branch("x0",&cxStart);
+  capt->Branch("y0",&cyStart);
+  capt->Branch("z0",&czStart);
+  capt->Branch("t0",&ctStart);
+  capt->Branch("parentID",&cparentid);
+  capt->Branch("isScatPhot",&cisScatPhot);
+
+  // global stats from each muon
+  gcapt->Branch("pdg1",&partcode);
+  gcapt->Branch("eventID_ET",&totalcapturecount);
+  gcapt->Branch("eventglobal",&eventcount);
+  gcapt->Branch("capt0",&captT);
+  gcapt->Branch("pos_x",&captx);
+  gcapt->Branch("pos_y",&capty);
+  gcapt->Branch("pos_z",&captz);
+  gcapt->Branch("dir_x1",&captx);
+  gcapt->Branch("dir_y1",&capty);
+  gcapt->Branch("dir_z1",&captz);
+  gcapt->Branch("Ekin1",&captenergy);
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+WCLiteEventAction::~WCLiteEventAction()
+{
+   TFile* no;
+   no = new TFile("FullEvent.root","RECREATE");
+   evttree->Write();
+   /*   nt->Write();
+   ht->Write();
+   trk->Write();
+   no->Close();
+
+   TFile* ne;
+   ne = new TFile("IndividualNeutronCaptures.root","RECREATE");
+   capt->Write("Hits_Tree");
+   gcapt->Write("Events_Tree");
+   ne->Close();
+   
+   TFile* nm;
+   nm = new TFile("IndividualMuons.root","RECREATE");
+   mul->Write("Hits_Tree");
+   gtrk->Write("Events_Tree");
+   nm->Close();
+   */
+
+   G4cout<<"End of this run. Number of events: "<< eventcount <<" no evts with muons: "<< totalmucount<< " frac of evts with muons: "<<(totalmucount/eventcount)<<G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+void WCLiteEventAction::BeginOfEventAction(const G4Event*)
+{}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+void WCLiteEventAction::EndOfEventAction(const G4Event* anEvent)
+{
+ 
+  //  G4cout <<"**********************"<<G4endl;
+  //  G4cout <<"**********************"<<G4endl;
+  G4cout <<" "<<G4endl;
+  G4cout <<" "<<G4endl; 
+  G4cout <<"START"<<G4endl;
+
+  double ncapturecount=0;
+  double neutroncount=0;
+  std::vector<double> ngammaspercaptcha;
+  std::vector<double> nfinalphotspercaptcha;
+  std::vector<double> energypercaptcha;
+  std::vector<double> t0ofcaptcha,xofcaptcha,yofcaptcha,zofcaptcha;
+  std::vector<std::vector<double> > photons;
+
+  G4TrajectoryContainer* trajectoryContainer=anEvent->GetTrajectoryContainer();
+  G4int n_trajectories = 0;
+  
+  G4int n_earlyEMparts = 0;
+  G4int n_earlyMuons = 0;
+
+   if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
+
+
+   nphot=0;
+   
+   G4int photcount=0, mpcount=0, neithercount=0;
+
+   for (G4int i=0; i<n_trajectories; i++){ 
+
+     G4Trajectory* trj = (G4Trajectory*)((*(anEvent->GetTrajectoryContainer()))[i]);
+     
+     trackid = trj->GetTrackID();
+     parentid = trj->GetParentID();
+
+     TString partname = (trj->GetParticleName());
+     partcode = -1;
+     if(partname=="opticalphoton") partcode=100;
+     if(partname=="e+") partcode=-11;
+     if(partname=="e-") partcode=11;
+     if(partname=="gamma") partcode=22;
+     if(partname=="mu+") partcode=-13;
+     if(partname=="mu-") partcode=13;
+     if(partname=="pi0") partcode=111;
+     if(partname=="pi+") partcode=211;
+     if(partname=="pi-") partcode=-211;
+     if(partname=="neutron") partcode = 2112 ;
+     if(partname=="proton") partcode = 2212 ;
+     if(partname=="nu_mu") partcode=14;
+     if(partname=="nu_e") partcode=12;
+     if(partname=="anti_nu_e") partcode=-12;
+     if(partname=="anti_nu_mu") partcode=-14;
+     if(partname=="alpha") partcode=3328;
+     if(partname=="deuteron") partcode=3329;
+     if(partname=="triton") partcode=3330;
+     if(partname=="C10[0.0]") partcode=3331;
+     if(partname=="C12[0.0]") partcode=3332;
+     if(partname=="N15[0.0]") partcode=3333;
+     if(partname=="N16[0.0]") partcode=3334;
+     if(partname=="O16[0.0]") partcode=3335;
+     if(partname=="Gd158[0.0]") partcode=3336;
+     if(partname=="Gd156[0.0]") partcode=3337;
+
+     if(partcode==-1) G4cout<<"sisdfweee "<<partname<<G4endl;
+
+     G4int numPoints = trj->GetPointEntries();
+     WCLiteTrajectoryPoint* mypnt = (WCLiteTrajectoryPoint*)(trj->GetPoint(numPoints-1));
+     xEnd = mypnt->GetPosition().x();
+     yEnd = mypnt->GetPosition().y();
+     zEnd = mypnt->GetPosition().z();
+     xEndDir = mypnt->GetDirection().x();
+     yEndDir = mypnt->GetDirection().y();
+     zEndDir = mypnt->GetDirection().x();
+     tEnd = mypnt->GetGlobalTime();
+     TEEnd = mypnt->GetTotalEnergy();
+     KEEnd = mypnt->GetKineticEnergy();
+     
+     TString theProcess = mypnt->GetProcessName();
+     processEnd=-1;
+     if(theProcess=="Transportation") processEnd=0;
+     if(theProcess=="Scintillation") processEnd=1;
+     if(theProcess=="Cerenkov") processEnd=2;
+     if(theProcess=="phot") processEnd=3;
+     if(theProcess=="OpAbsorption") processEnd=4;
+     if(theProcess=="eIoni") processEnd=5;
+     if(theProcess=="muIoni") processEnd=6;
+     if(theProcess=="hIoni") processEnd=7;
+     if(theProcess=="eBrem") processEnd=8;
+     if(theProcess=="muBrem") processEnd=9;
+     if(theProcess=="HadronElastic") processEnd=10;
+     if(theProcess=="nCapture") processEnd=11;
+     if(theProcess=="compt") processEnd=12;
+     if(theProcess=="Decay") processEnd=13;
+     if(theProcess=="muMinusCaptureAtRest") processEnd=14;
+     if(theProcess=="NeutronInelastic") processEnd=15;
+     if(theProcess=="ProtonInelastic") processEnd=16;
+     if(theProcess=="conv") processEnd=17;
+     if(theProcess=="annihil") processEnd=18;
+
+     if(processEnd<0) G4cout<<"OIUODIUODISF "<<theProcess<<G4endl;
+
+     phhit=0;
+     if(partcode==100 && mypnt->GetDetectorLocation()=="DetectorHit"){
+       // G4cout<<mypnt->GetDetectorLocation()<<G4endl;
+       phhit=1;
+     }
+
+     //   tEnd=5.;
+
+     mypnt = (WCLiteTrajectoryPoint*)(trj->GetPoint(0));
+     xStart = mypnt->GetPosition().x();
+     yStart = mypnt->GetPosition().y();
+     zStart = mypnt->GetPosition().z();
+     xStartDir = mypnt->GetDirection().x();
+     yStartDir = mypnt->GetDirection().y();
+     zStartDir = mypnt->GetDirection().z();
+     tStart = mypnt->GetGlobalTime();
+     TEStart = mypnt->GetTotalEnergy();
+     KEStart = mypnt->GetKineticEnergy();
+
+     TString sProcess = mypnt->GetProcessName();
+     if(sProcess=="Transportation") processStart=0;
+     if(sProcess=="Scintillation") processStart=1;
+     if(sProcess=="Cerenkov") processStart=2;
+     if(sProcess=="phot") processStart=3;
+     if(sProcess=="OpAbsorption") processStart=4;
+     if(sProcess=="eIoni") processStart=5;
+     if(sProcess=="muIoni") processStart=6;
+     if(sProcess=="hIoni") processStart=7;
+     if(sProcess=="eBrem") processStart=8;
+     if(sProcess=="muBrem") processStart=9;
+     if(sProcess=="HadronElastic") processStart=10;
+     if(sProcess=="nCapture") processStart=11;
+     if(sProcess=="compt") processStart=12;
+     if(sProcess=="Decay") processStart=13;
+     if(sProcess=="muMinusCaptureAtRest") processStart=14;
+
+     if(KEStart>0) {wavelengthStart = (4.13566733*2.99792458 *0.0001 )/KEStart;}
+
+     if(partcode==100){
+       isScatPhot=0;
+       if( ((xStartDir-xEndDir)!=0) || ((yStartDir-yEndDir)!=0) || ((yStartDir-yEndDir)!=0) ){
+	 //G4cout<<"scattered? "<<(xStartDir-xEndDir)<<" "<<(yStartDir-yEndDir)<<" "<<(yStartDir-yEndDir)<<G4endl;
+	 isScatPhot=1;  
+       }
+
+       phot_xStart[nphot]=xStart;
+       phot_yStart[nphot]=yStart;
+       phot_zStart[nphot]=zStart;
+       phot_tStart[nphot]=tStart;
+       phot_xEnd[nphot]=xEnd;
+       phot_yEnd[nphot]=yEnd;
+       phot_zEnd[nphot]=zEnd;
+       phot_tEnd[nphot]=tEnd;
+       phot_wavelength[nphot]=wavelengthStart;
+       phot_processStart[nphot]=processStart;
+       phot_isScat[nphot]=isScatPhot;
+       phot_parentid[nphot]=parentid;
+       phot_trackid[nphot]=trackid;
+       phot_hit[nphot]=phhit;
+
+       nphot++;
+
+       //       if(nphot%100==0) G4cout<<nphot<<" PPPP "<<G4endl;
+     }else{
+       isScatPhot=-1;
+     }
+
+     
+
+     // Stats on neutrons and neutron capture
+     if(partcode==2112) neutroncount++;
+     if( (processStart==11) && (partcode==22) ){
+
+       int whichcaptcha=-1;
+       for(int m=0; m<t0ofcaptcha.size(); m++){
+	 if( fabs(tStart-t0ofcaptcha.at(m))<5.0 ) whichcaptcha=m;
+       }
+
+       if(whichcaptcha==-1){
+	 ncapturecount++;
+	 t0ofcaptcha.push_back(tStart);
+	 xofcaptcha.push_back(xStart);
+	 yofcaptcha.push_back(yStart);
+	 zofcaptcha.push_back(zStart);
+	 energypercaptcha.push_back(TEStart);
+	 ngammaspercaptcha.push_back(1.0);
+       } else{
+	 double theE = energypercaptcha.at(whichcaptcha);
+	 double theNgam = ngammaspercaptcha.at(whichcaptcha);
+	 
+	 theE+=TEStart;
+	 theNgam+=1.0;
+	 
+	 energypercaptcha.at(whichcaptcha) = theE;
+	 ngammaspercaptcha.at(whichcaptcha) = theNgam;
+       }
+     }
+     //Done with neutroncapture stats
+
+     /*
+     //temporary store of "isHit" photons
+     if(partcode==100 && phhit==1)
+       {
+	 std::vector<double> hitinfo;
+	 hitinfo.push_back(xStart);
+	 hitinfo.push_back(yStart);
+	 hitinfo.push_back(zStart);
+	 hitinfo.push_back(tStart);
+	 hitinfo.push_back(xEnd);
+	 hitinfo.push_back(yEnd);
+	 hitinfo.push_back(zEnd);
+	 hitinfo.push_back(tEnd);
+	 hitinfo.push_back(wavelengthStart);
+	 hitinfo.push_back(isScatPhot);
+	 hitinfo.push_back(parentid);
+	 hitinfo.push_back(processStart);
+	 photons.push_back(hitinfo);
+
+	 //	 ht->Fill();
+       }
+     */
+
+     //Full track info on all non-photon particles
+     if(partcode!=100){
+       for(int i=0; i<=numPoints-1; i++){
+
+	 mypnt = (WCLiteTrajectoryPoint*)(trj->GetPoint(i));
+
+	 xStep = mypnt->GetPosition().x();
+	 yStep = mypnt->GetPosition().y();
+	 zStep = mypnt->GetPosition().z();
+	 tStep = mypnt->GetGlobalTime();
+	 TEStep = mypnt->GetTotalEnergy();
+	 KEStep = mypnt->GetKineticEnergy();
+	 
+	 iStep = i;
+
+	 TString theProcess = mypnt->GetProcessName();
+	 processStep=-1;
+	 if(theProcess=="Transportation") processStep=0;
+	 if(theProcess=="Scintillation") processStep=1;
+	 if(theProcess=="Cerenkov") processStep=2;
+	 if(theProcess=="phot") processStep=3;
+	 if(theProcess=="OpAbsorption") processStep=4;
+	 if(theProcess=="eIoni") processStep=5;
+	 if(theProcess=="muIoni") processStep=6;
+	 if(theProcess=="hIoni") processStep=7;
+	 if(theProcess=="eBrem") processStep=8;
+	 if(theProcess=="muBrem") processStep=9;
+	 if(theProcess=="HadronElastic") processStep=10;
+	 if(theProcess=="nCapture") processStep=11;
+	 if(theProcess=="compt") processStep=12;
+	 if(theProcess=="Decay") processStep=13;
+	 if(theProcess=="muMinusCaptureAtRest") processStep=14;
+	 if(theProcess=="NeutronInelastic") processStep=15;
+	 if(theProcess=="ProtonInelastic") processStep=16;
+	 
+	 //	 if(iStep==0) trk->Fill();
+       }
+     }
+     // Done with Full track info on all non-photon particles
+
+     if( (partcode==13 || partcode==-13) )
+       {
+	 G4cout<<n_earlyMuons<<" "<<tStart<<G4endl;
+
+	 if( (n_earlyMuons==0)&&(tStart<1.0) ) 
+	   {
+	     G4cout<<"MADeIT"<<G4endl;
+
+	     meventcount++;
+	     mpartcode = partcode;
+	     mxStart=xStart;
+	     myStart=yStart;
+	     mzStart=zStart;
+	     mxStartDir=xStartDir;
+	     myStartDir=yStartDir;
+	     mzStartDir=zStartDir;
+	     mtStart=tStart;
+	     mTEStart=TEStart;
+	     mKEStart=KEStart;
+	     mprocessStart=processStart;
+	     mparentid=parentid;
+	     mtrackid=trackid;
+	     
+	     //	     G4cout<<"here "<<mxStart<<" "<<myStart<<G4endl;
+ 	   }
+
+	 if(tStart<1.0){n_earlyMuons++;}
+
+       }
+
+     //     nt->Fill();
+     
+   }
+
+   G4cout<<"ready to fill "<<nphot<<G4endl;
+
+   evttree->Fill();
+
+   G4cout <<"Neutron Capture Info...N neutrons: "<< neutroncount << " N neutron captures: "<< ncapturecount << G4endl;
+   G4cout <<"*********************************************"<<G4endl;
+   for(int jjj=0; jjj<ncapturecount; jjj++){
+     G4cout<<"Capture #"<<jjj+1<<" t0: "<<t0ofcaptcha.at(jjj)<<" ngammas: "<<ngammaspercaptcha.at(jjj)<<" energy: "<<energypercaptcha.at(jjj)<<G4endl;
+
+     capturecount=jjj;
+     totalcapturecount++;
+     captenergy = energypercaptcha.at(jjj);
+     ncaptgammas = ngammaspercaptcha.at(jjj);
+     captT = t0ofcaptcha.at(jjj);
+     captx = xofcaptcha.at(jjj);  
+     capty = yofcaptcha.at(jjj);  
+     captz = zofcaptcha.at(jjj);  
+
+     G4cout<< captT <<"N phots: "<<photons.size()<<G4endl;
+
+ 
+     nphotspercapt=0;
+     for(int iii=0; iii<photons.size(); iii++){
+
+       std::vector<double> ahit;
+       ahit = photons.at(iii);
+       if( fabs(ahit.at(3) - captT)<35. ){
+	 cxStart = ahit.at(0);
+	 cyStart = ahit.at(1);
+	 czStart = ahit.at(2);
+	 ctStart = ahit.at(3);
+	 cxEnd = ahit.at(4);
+	 cyEnd = ahit.at(5);
+	 czEnd = ahit.at(6);
+	 ctEnd = ahit.at(7);
+	 cwavelengthStart = ahit.at(8);
+	 cisScatPhot = ahit.at(9);
+	 cparentid = ahit.at(10);
+	 cprocessStart = ahit.at(11);
+	 //	 capt->Fill();
+	 nphotspercapt++;
+       }
+     }
+
+     //     gcapt->Fill();
+
+   }
+
+   if(n_earlyMuons==1){
+ 
+     //    G4cout<<"here2 "<<mxStart<<" "<<myStart<<G4endl;
+     totalmucount++;
+
+     G4int nearlycount=0;
+
+     for(int iii=0; iii<photons.size(); iii++){
+
+       std::vector<double> ahit;
+       ahit = photons.at(iii);
+       if( ahit.at(7) < 18. ){
+	 //	 mhxStart = ahit.at(0);
+	 //	 mhyStart = ahit.at(1);
+	 //	 mhzStart = ahit.at(2);
+	 //	 mhtStart = ahit.at(3);
+	 mhxEnd = ahit.at(4);
+	 mhyEnd = ahit.at(5);
+	 mhzEnd = ahit.at(6);
+	 mhtEnd = ahit.at(7);
+	 mhwavelength = ahit.at(8);
+	 mhisScatPhot = ahit.at(9);
+	 mhparentid = ahit.at(10);
+	 mhprocessStart = ahit.at(11);
+	 //	 mul->Fill();
+	 nearlycount++;
+       }
+     }
+
+     //     if(nearlycount>0) gtrk->Fill();
+
+   }
+
+   G4cout <<"event: "<<eventcount<<G4endl;
+   G4cout <<"Number of particles is: "<<n_trajectories<<G4endl;
+   G4cout <<photcount<<" Photons,    "<<n_earlyMuons<<" Muons,    "<<neithercount<<" neither."<<G4endl;
+      G4cout <<"******************************************"<<G4endl;
+   G4cout <<"******************************************"<<G4endl;
+   G4cout <<"END"<<G4endl;
+   G4cout <<" "<<G4endl;
+   G4cout <<" "<<G4endl;   
+   
+   
+   eventcount++;
+   
+  // Trajectory drawing now done by vis mananger under vis comamnds.
+  // See vis.mac.
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
