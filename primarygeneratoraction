@@ -1,0 +1,69 @@
+http://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/ForApplicationDeveloper/html/ch05s02.html
+primary generator action.cc
+//----------------------------------------
+globally:
+first declares use of cstd::string, <vector>, fstream. 
+Also creates a function to read a line and split it up by tokens (e.g. space) 
+and to make atoi and atof (string to int/double) work with string inputs rather than char* inputs by using string.c_str() to convert string to char*. 
+//----------------------------------------
+PrimaryGeneratorAction constructor:
+
+initialize detector construction pointer to myDC
+declare general particle source
+declare 30 max tracks, 50 max MRD hits. 
+declare pid, px,py,pz,KE arrays of size [maxtracks] 
+declare hitlayer,hitorientation, hitEdep, hitEchdep, hitx,hity,hitz arrays of size [maxMRDhits]
+
+create a tree to store results. Create branches for:
+evt, mode, neutrino: E,ID,px,py,pz,ntrks,nneutrons,vtxx,vtxy,vtxz. (interaction vertex and momentum etc)
+MRD: layers,totEdep,totEchdep,px,py,pz,KE as arrays of size ntrks. 
+MRD: arrays for all hit variables (defined above) of size nMRDlayers. 
+
+Create a particle gun, and set particle to mu+, energy to 1GeV, momentum to 0.0.1, position to 0.0.0
+//----------------------------------------
+WCLitePrimaryGeneratorAction Destructor:
+
+prints some cryptic messages about rock. 
+Writes tree to root file. 
+Closes file, deletes file pointer, particle gun, gps, messenger.
+
+//----------------------------------------
+Generate Primaries():
+
+Define voffset x,y,z, vscale x,y,z. These are either read from cardfile or set to random based on an integer (defaults to file). 
+
+If file is not open manually specify a vector with the command /mygen/vecfile name
+
+3 EVENT FORMATS: 1ST (LARGEST) EVENTS FROM MULINE. 
+declare a matrix of doubles for particles & layers, and a vector is defined for ID, dir (G4ThreeVector) and E.
+Read first line from file and convert input to ints for mode and evt. 
+Read remaining lines of file for each track/vertex.
+
+For tracks; select desired interactions by column2 integer.
+For those desired read in PDG, energy and momentum. 
+For one particlar type these are appended to the vectors, and ntrk is incremented. 
+
+For vertices; read vtx x,y,z (or generate random if not using file).
+
+Once all file contents are read, loop through ntrk sized vectors. Load particle gun with particle type, mass, energy, KE (=energy-mass), momentum dir and (generic? Not read..) position. 
+If pdg indicates particle is a neutron, increment nneutrons.
+Call GeneratePrimaryVertex(anEvent)
+
+At end of generating primary vertices, read from file penetration depth (MRDlayers), total E deposition (MRDtotEdep), Cerenkov energy (MRDtotEchdep).
+Resume reading from file, using layercount as index, while column0 specifies strip orientation. Seems to read in detections from MRD. 
+For each entry fill corresponding entry in arrays for hitlayer, hitorientation (strip orientn), Edep, Echdep, x,y,z. 
+Fill tree. 
+(small alt. code section for different file format, reads E, posn with a (fixed) random z, mom.dir, and (generic?) vertex. Generates a primary event from these.
+
+2ND EVENT FORMAT: 'NORMAL' EVENTS.
+Call GeneratePrimaryVertex(). Get particle PDG, mass, momentum and position from this event. Convert momentum to unit vector, calculate E from p and m. Set these properties (?)
+'anEvent->GetPrimaryVertex()->GetPrimary()->GetMomentum() //etc
+SetVtx(vtx);		//set generic vtx? Still not read.
+SetBeamEnergy(E);	//set calculated E. Whre is this being set?
+
+3RD EVENT FORMAT: LASER EVENTS. 
+Exact same as above but mass not retrived and E=p for E calculation. 
+//----------------------------------------
+Funtion declaration for splitting input into vector of vals. 
+
+

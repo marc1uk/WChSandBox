@@ -1,0 +1,72 @@
+PhysicsList:
+//----------------------------------------
+data members:
+    WCLitePhysicsMessenger* PhysicsMessenger;
+    G4String SecondaryHadModel;
+    G4bool gheishahad;
+    G4bool bertinihad;
+    G4bool binaryhad;
+//----------------------------------------
+constructor sets default cut level = 1.0mm, creates PhysicsMessenger.
+//----------------------------------------
+
+ConstructParticle() defines & creates'new' one of each of the particle classes (leptons, mesons, baryons, bosons, ions) by creating a G4xxxConstructor then calling constructor.ConstructParticle(). Also calls G4OpticalPhoton::OpticalPhotonDefinition();
+
+ConstructProcess() just calls constructor functions for Transportation, EM, lArStepLimiter, General, Op and Had. 
+
+//----------------------------------------
+ConstructEM resets the particle iterator, then scans through each particle.
+
+For each, it gets the iterator, name and runmanager. Then, depending on the particle name, it defines all interaction processes, then adds them to the process manager. Occasionally these are done together:
+
+	G4VProcess* theeminusIonisation = new G4eIonisation();
+	particleprocessmanager->AddProcess(theeminusIonisation);
+or
+	particleprocessmanager->AddDiscreteProcess(new G4ComptonScattering)
+
+Each process defined is given a name specific to the process and particle involved. For some processes an ordering is specified, for AlongStepDoIt, PostStepDoIt, and/or AtRestDoIt:
+
+	particleprocessmanager->SetProcessOrdering(theeminusMultipleScattering,idxAlongStep,1);
+
+//----------------------------------------
+
+ConstructlArStepLimiter scans through particles for those that are 1) short lived, 2) charged and 3) not a chargedgeantino. For those qualifying, a G4StepLimiter is created and added to their process list. The process is ordered as a last PostDoIt step. 
+
+//----------------------------------------
+
+ConstructOp() defines optical processes: Cerenkov, Scintillation, Absorption, Rayleigh scattering and a Boundary Process. 
+
+For Cerenkov the max photons is set to 300 and secondary tracking is enabled. 
+
+For Scintillation the yield factor is set to 0.26 and secondary tracking is enabled. Saturation (due to Birk's constant?) is also added via 'G4EmSaturation* emSaturation = G4LossTableManager::Instance()->EmSaturation();' and adding this saturation to the Scintillation process.
+
+The boundary process is set to use the unified model.
+
+A scan is then performed over particles, adding optical processes as PostStep process if applicable for that particle. (done twice for cerenkov? Ordered for both AtRest and PostStep for Scintillation?) 
+
+//----------------------------------------
+
+ConstructGeneral() also performs a scan through all particles, checking if Decay is an applicable process and ordering it as a PostDoIt and AtRest process if so. 
+
+//----------------------------------------
+
+ConstructHad() creates a G4ElasticProcess and a G4Elastic model, and registers the model with the process. Again particles are scanned through and for certain classes of hadrons (pi, proton, kaon etc) the elastic process is added as a discete process. A suitably named inelastic process is also defined and added, and sometimes an AtRestProcess of absorption is added. 
+For protons a secondary model (gheisha, Bertini, Binary or LEInelastic) should be defined. This is registered with the inelastic process. 
+
+For some an energy bound is added: 
+	theNeutronElasticProcess->RegisterMe(theElasticModel1);
+	theElasticModel1->SetMinEnergy(19*MeV);
+or a dataset
+	G4NeutronHPElasticData * theNeutronData = new G4NeutronHPElasticData;
+	theNeutronElasticProcess->AddDataSet(theNeutronData);
+
+For neutron capture (possibly others) two models are defined and added to the process to cover different energy ranges (only a cutoff specified for one though?)
+
+//----------------------------------------
+
+SetSecondaryHad() just sets a bunch of booleans to which process is selected (gheisha, bertini etc). 
+
+//----------------------------------------
+
+SetCutValues() just prints the default cut value/length, then sets gamma, e- and e+ (order important) cut values to the default cut value. 
+
