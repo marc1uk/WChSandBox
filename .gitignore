@@ -1,0 +1,7 @@
+*~
+*.d
+*.o
+*.do
+*.root
+tmp
+bin/Linux-g++/WChSandBox
