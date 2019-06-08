@@ -1,0 +1,14 @@
+/control/verbose 0
+/mygen/vecfile fluxesandtables/nuance_nu_nd2k_cylinder_r551_z2200_Z_10000_0.dat
+
+/tracking/verbose 0
+/tracking/verbose 0
+/control/verbose 0
+/particle/process/verbose 0
+/process/verbose 0 
+/material/verbose 0
+/vis/verbose 0
+/run/verbose 0
+
+/random/setSeeds 1234 1000
+/run/beamOn 10

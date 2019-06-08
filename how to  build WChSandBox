@@ -1,0 +1,12 @@
+source setupLite.sh
+export G4WORKDIR=$PWD
+source /usr/local/geant4/geant9.4-p01/env.sh
+make clean
+make
+
+then  ./bin/Linux-g++/WChSandBox
+(ignore errors about vis.mac)
+then /control/execute MainRun.mac (must run WChSandBox from main folder!)
+
+so far returns 200 events, mostly empty columns. same with MainRunHK.mac
+
