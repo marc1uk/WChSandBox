@@ -133,7 +133,7 @@ int main(int argc,char** argv)
       session = new G4UIterminal();
 #endif    
       UI->ApplyCommand("/control/execute vis.mac"); 
-      UI->ApplyCommand("/mygen/vecfile fluxesandtables/numu_center.txt");
+      //UI->ApplyCommand("/mygen/vecfile fluxesandtables/numu_center.txt");
       session->SessionStart();
       delete session;
    }

@@ -21,10 +21,11 @@
 G4Allocator<MRDHit> MRDHitAllocator;
 
 //////////////////////////
-MRDHit::MRDHit(){}
+MRDHit::MRDHit(){}//G4cout<<"mrdhit constructor()"<<G4endl;}
 
 //////////////////////////
 MRDHit::MRDHit(G4Step* aStep) {
+	//G4cout<<"mrdhit constructor(G4Step*)"<<G4endl;
 
 	G4StepPoint* preStepPoint= aStep->GetPreStepPoint();
 	G4Track* aTrack = aStep->GetTrack();

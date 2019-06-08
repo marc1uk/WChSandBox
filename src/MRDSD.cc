@@ -55,8 +55,8 @@ G4bool MRDSD::ProcessHits(G4Step* aStep, G4TouchableHistory*) { // weird syntax;
 	newHit= new MRDHit(aStep);
 	newHit->SetHitID(nhit);      
     hitsCollection->insert(newHit);
-    G4cout<<G4endl<<"An MRD hit!"<<G4endl;
-    newHit->Print();
+    //G4cout<<G4endl<<"An MRD hit!"<<G4endl;
+    //newHit->Print();
 
   // Scintillator response (quenching, attenuation)
   // This calls in code from SBSimMRDResponse which applies attenuation and Birk's constant to modify the deposited enegy. 
