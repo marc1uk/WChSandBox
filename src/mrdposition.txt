@@ -1,0 +1,6 @@
+#GlobalPos	0.0	0.0	136.0
+#GlobalPos	0.0	0.0	221.5
+#GlobalPos	-0.23	-0.48	221.5 
+#GlobalPos	0.4781	0.9684	221.5 #marcus edited out
+#GlobalPos	0.4781	0.9684	550.0 # marcus replacement
+GlobalPos	0.4781	0.9684	321.50 # alignment with rob hatcher's sciboone import
