@@ -1,0 +1,9 @@
+source setupLite.sh
+source /usr/local/geant4/geant9.4-p01/env.sh
+export G4WORKDIR=$PWD
+make
+
+then  ./bin/Linux-g++/WChSandBox
+
+and /run/beamOn 5
+
